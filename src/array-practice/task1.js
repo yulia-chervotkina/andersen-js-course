@@ -15,22 +15,8 @@
  * console.log(any([0, 0, 0, 0])); -> false
  */
 
-const any = (arr, cb) => {
-  return arr.reduce((acc, next) => {
-    if (cb !== undefined && typeof cb === 'function' && cb(next)) acc = true;
-    else if (next) acc = true;
-    return acc;
-  }, false);
+export const any = (arr, cb = a => !!a) => {
+  return arr.some(cb);
 };
-
-/*
-// Возможна реализация через some.
-export const any = (arr, cb) => {
-  if (cb !== undefined && typeof cb === 'function') {
-    return arr.some(cb);
-  }
-  return arr.some(a => !!a);
-};
-*/
 
 export default any;
