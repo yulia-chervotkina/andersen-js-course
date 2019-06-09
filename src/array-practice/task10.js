@@ -20,7 +20,7 @@ export const meetups = [
 // function membersOnActiveMeetups(meetups) {}
 
 export const membersOnActiveMeetups = array =>
-  array.reduce((acc, next) => {
-    if (next.isActive) acc += next.members;
+  array.reduce((acc, { isActive, members }) => {
+    acc += isActive ? members : 0;
     return acc;
   }, 0);
