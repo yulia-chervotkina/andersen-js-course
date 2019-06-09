@@ -42,6 +42,6 @@ export const task4New = () => {
     bar() {
       return this.x + this.y;
     },
-    ['baz' + foo()]: 'new field',
+    [`baz${foo()}`]: 'new field',
   };
 };
