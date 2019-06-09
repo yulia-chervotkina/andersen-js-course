@@ -11,9 +11,11 @@
  */
 
 const forEachRight = (array, cb) => {
-  array.forEach((elem, index) => {
-    cb(array[array.length - index - 1]);
-  });
+  array
+    .sort((a, b) => b - a)
+    .forEach(elem => {
+      cb(elem);
+    });
 };
 
 export default forEachRight;
