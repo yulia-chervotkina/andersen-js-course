@@ -13,7 +13,9 @@
 
 const indexOfAll = (array, value) =>
   array.reduce((acc, next, index) => {
-    if (next === value) acc.push(index);
+    if (next === value) {
+      acc.push(index);
+    }
     return acc;
   }, []);
 
