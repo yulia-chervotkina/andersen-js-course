@@ -16,10 +16,9 @@
 
 const createGenerator = array => {
   return {
-    array,
+    newArray: [...array],
     next() {
-      if (array.length > 0) return array.shift();
-      return 'Complete!';
+      return this.newArray.length > 0 ? this.newArray.shift() : 'Complete!';
     },
   };
 };
