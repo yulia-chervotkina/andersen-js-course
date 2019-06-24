@@ -17,7 +17,7 @@ export function handleDropTrash(e) {
 
   const itemId = e.dataTransfer.getData('text/plain');
 
-  this.removeItem(itemId);
+  this.handleRemoveItem(itemId);
 }
 // проверяем подходит ли элемент к инвентарю
 function isValidInventory(item, inv) {

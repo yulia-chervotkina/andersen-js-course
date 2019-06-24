@@ -186,6 +186,10 @@ class View extends EventEmitter {
     }
   }
 
+  handleRemoveItem(id) {
+    this.emit(EVENTS.REMOVE, { id });
+  }
+
   removeItem(id) {
     const elem = this.window.querySelector(`div[item-id='${id}']`);
 
@@ -209,6 +213,10 @@ class View extends EventEmitter {
 
     freeSlot.appendChild(item);
     freeSlot.setAttribute('free', 'false');
+  }
+
+  showItems(data) {
+    data.forEach(item => this.addItem(item));
   }
 }
 

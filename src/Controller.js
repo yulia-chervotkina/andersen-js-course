@@ -8,7 +8,7 @@ class Controller {
     this.view = view;
 
     this.initializeEvents();
-    // view.show(model.data);
+    view.showItems(model.data);
   }
 
   initializeEvents() {
