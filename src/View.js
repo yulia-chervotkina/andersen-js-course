@@ -11,6 +11,7 @@ class View extends EventEmitter {
     this.initializeElements();
     this.fillInventories();
     this.addEventListeners();
+    this.showInfoWindow();
   }
 
   initializeElements() {
