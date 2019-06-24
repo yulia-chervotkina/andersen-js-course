@@ -18,7 +18,7 @@
       <div class="workSpace">
         <div class="craftZone">
           <div class="title">Craft zone</div>
-          <div class="slot forgeRecipeSlot" free="true"></div>
+          <div class="slot forgeRecipeSlot"></div>
           <button class="button" id="forgeBtn">Forge</button>
           <div class="inventory" id="forgeInv"></div>
         </div>
@@ -32,7 +32,7 @@
           <div class="title">New recipe</div>
           <div class="newRecipeSpace">
             <div class="newRecipeCraftZone">
-              <input class="newRecipeName" type="text" placeholder="Name" />
+              <input class="newRecipeName" type="text" placeholder="Name" maxlength="7" />
               <div class="inventory" id="newRecipeInv"></div>
             </div>
             <div class="newRecipeControl">
@@ -52,8 +52,8 @@
       <div class="modal">
         <div class="infoWindow">
           <img class="closeBtn" src="images/close.svg" alt="close" />
-          <header class="title">MINE</header>
-          <article class="infoText">
+          <div class="title">MINE</div>
+          <div class="infoText">
             <p>
               To start game press <span>MINE</span> to find some ores. Found ores will appear in
               your inventory.
@@ -80,14 +80,14 @@
               <span>TRASH ZONE</span>. You can open info window with
               <img class="infoImg" src="images/info.svg" alt="info" /> button.
             </p>
-          </article>
+          </div>
         </div>
         <div class="errorWindow">
           <img class="closeBtn" src="images/close.svg" alt="close" />
-          <section class="errorMsg">
+          <div class="errorMsg">
             To create new recipe, you need to drop some items to <span>NEW RECIPE</span> window
             slots and write name.
-          </section>
+          </div>
         </div>
       </div>
     </div>
