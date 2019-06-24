@@ -199,6 +199,10 @@ class View extends EventEmitter {
     const slots = utils.takeItemsFrom(place, '.slot');
     const freeSlot = slots.find(element => element.getAttribute('free') === 'true');
 
+    if (!freeSlot) {
+      throw new Error(ERRORS.NO_SPACE);
+    }
+
     if (item.parentNode) {
       item.parentNode.setAttribute('free', 'true');
     }

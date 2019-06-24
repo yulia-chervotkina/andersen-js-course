@@ -10,17 +10,17 @@ body {
 .inventoryControl {
   display: -webkit-box;
   display: -ms-flexbox;
-  
+
   display: flex;
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
 }
 
 .window {
   min-height: 100vh;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   background: #1e1d23;
 }
 
@@ -34,33 +34,33 @@ body {
 .inventorySpace {
   display: -webkit-box;
   display: -ms-flexbox;
-  
+
   display: flex;
   -ms-flex-preferred-size: 30%;
-      flex-basis: 30%;
+  flex-basis: 30%;
   min-height: 90vh;
   border: 2px solid #ffad01;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .recipeInvSpace {
   display: -webkit-box;
   display: -ms-flexbox;
-  
+
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   position: relative;
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
   min-height: 90vh;
 }
 .newRecipeCraftZone,
@@ -68,27 +68,27 @@ body {
 .craftZone {
   display: -webkit-box;
   display: -ms-flexbox;
-  
+
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 .newRecipeCraftZone {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .infoWindow {
   display: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
   background: #1e1d23;
   position: relative;
   z-index: 3;
@@ -112,20 +112,20 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  
+
   -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
 }
 
 .modal {
   display: none;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -139,14 +139,13 @@ body {
   display: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
   background: #1e1d23;
   width: 30%;
   min-height: 90vh;
-  padding-bottom: 5px;
   position: absolute;
   z-index: 1;
 }
@@ -167,11 +166,11 @@ body {
   line-height: 23px;
   display: -webkit-box;
   display: -ms-flexbox;
-  
+
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   letter-spacing: 0.05em;
 }
 
@@ -194,14 +193,14 @@ body {
 .newRecipeSpace {
   display: -webkit-box;
   display: -ms-flexbox;
-  
+
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   height: 75vh;
 }
 
@@ -209,49 +208,48 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  
 }
 
 .craftZone {
   min-height: 70vh;
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
+  flex-basis: 100%;
 }
 
 .workSpace {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  
+
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -ms-flex-preferred-size: 30%;
-      flex-basis: 30%;
+  flex-basis: 30%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   min-height: 90vh;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .recipeSpace {
   -ms-flex-preferred-size: 30%;
-      flex-basis: 30%;
+  flex-basis: 30%;
   min-height: 90vh;
   border: 2px solid #ffad01;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .infoText {
@@ -292,21 +290,21 @@ span {
 .inventory {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  
+
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
   -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
   -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
+  flex-basis: 100%;
   -ms-flex-line-pack: start;
-      align-content: flex-start;
+  align-content: flex-start;
 }
 
 .title {
@@ -351,7 +349,7 @@ header {
   height: 5vh;
   width: 12vw;
   -webkit-box-shadow: 0 6px #986500;
-          box-shadow: 0 6px #986500;
+  box-shadow: 0 6px #986500;
   font-weight: 800;
   font-family: 'Roboto';
   line-height: 4vh;
@@ -367,13 +365,13 @@ header {
 
 .button:hover {
   -webkit-box-shadow: 0 4px #986500;
-          box-shadow: 0 4px #986500;
+  box-shadow: 0 4px #986500;
   top: 2px;
 }
 
 .button:active {
   -webkit-box-shadow: 0 0 #986500;
-          box-shadow: 0 0 #986500;
+  box-shadow: 0 0 #986500;
   top: 6px;
 }
 
@@ -395,11 +393,10 @@ header {
   font-size: 18px;
   letter-spacing: 0.1em;
   -webkit-transition: -webkit-transform 0.2s ease-out;
-          transition: -webkit-transform 0.2s ease-out;
-       -o-transition: transform 0.2s ease-out;
-          transition: transform 0.2s ease-out;
-          transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
- 
+  transition: -webkit-transform 0.2s ease-out;
+  -o-transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
 }
 
 .newRecipeBtn {
@@ -420,11 +417,11 @@ header {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   border-radius: 2px;
 }
 
