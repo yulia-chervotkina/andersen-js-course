@@ -29,6 +29,8 @@ class View extends EventEmitter {
     this.newRecipeWindow = d.querySelector('.newRecipeWindow');
     this.infoWindow = d.querySelector('.infoWindow');
     this.errorWindow = d.querySelector('.errorWindow');
+
+    this.forgeRecipeSlot.setAttribute('free', 'true');
   }
 
   addEventListeners() {
@@ -112,12 +114,14 @@ class View extends EventEmitter {
     const itemIds = itemsArray.map(elem => elem.getAttribute('item-id'));
     const itemNames = itemsArray.map(elem => elem.innerText);
 
-    const recipeName = this.newRecipeWindow.querySelector('.newRecipeName').value;
+    const recipeNameInput = this.newRecipeWindow.querySelector('.newRecipeName');
+    const recipeName = recipeNameInput.value;
     if (!recipeName) {
       throw new Error(ERRORS.NO_NAME);
     }
     this.emit(EVENTS.CREATE, { recipeName, itemNames, itemIds });
     this.hideNewRecipeWindow();
+    recipeNameInput.value = '';
   }
 
   showInfoWindow() {
@@ -168,7 +172,7 @@ class View extends EventEmitter {
     item.innerText = name;
     item.setAttribute('item-id', id);
     item.setAttribute('draggable', 'true');
-
+    // Определяем, какого типа предмет
     if (forged) {
       item.classList.add('item');
       item.style.background = color;

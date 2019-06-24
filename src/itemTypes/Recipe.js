@@ -11,6 +11,7 @@ class Recipe extends Ore {
   }
 
   forgeItem(items) {
+    // сверяем ингредиенты с рецептом
     const check = this.requre.reduce(
       (acc, next) => {
         const index = acc.indexOf(next);

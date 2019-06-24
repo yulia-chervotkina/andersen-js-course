@@ -19,7 +19,7 @@ export function handleDropTrash(e) {
 
   this.removeItem(itemId);
 }
-
+// проверяем подходит ли элемент к инвентарю
 function isValidInventory(item, inv) {
   const invId = inv.getAttribute('id');
   return (
@@ -33,7 +33,6 @@ function isValidInventory(item, inv) {
 export function handleDrop(e) {
   e.preventDefault();
   e.stopPropagation();
-
   if (e.target.classList.contains('item') || e.target.classList.contains('recipe')) {
     throw new Error(BUSY);
   }
