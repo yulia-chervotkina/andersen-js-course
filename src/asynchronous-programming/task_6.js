@@ -1,3 +1,3 @@
 export default function getResolvedPromise(value) {
-  return new Promise(res => res(value));
+  return Promise.resolve(value);
 }
