@@ -1,9 +1,7 @@
-import fetch from 'node-fetch';
+import makeRequest from '../makeRequest';
 
 export default function task5() {
-  // Parallel
-
-  const urls = [
+  const URLS = [
     'http://www.json-generator.com/api/json/get/cevhxOsZnS',
     'http://www.json-generator.com/api/json/get/cguaPsRxAi',
     'http://www.json-generator.com/api/json/get/cfDZdmxnDm',
@@ -11,31 +9,23 @@ export default function task5() {
     'http://www.json-generator.com/api/json/get/ceQMMKpidK',
   ];
 
-  const makeRequest = url => fetch(url).then(frstResponse => frstResponse.json());
+  // Parallel
 
-  Promise.all(urls.map(makeRequest)).then(dataArray => console.log(dataArray));
+  Promise.all(URLS.map(makeRequest)).then(dataArray => {
+    console.log('PARALLEL:');
+    console.log(dataArray);
+  });
 
   // Sequential
 
-  fetch(urls[0])
-    .then(firstResponse => firstResponse.json())
-    .then(firstData => {
-      fetch(urls[1])
-        .then(scndResponse => scndResponse.json())
-        .then(scndData => {
-          fetch(urls[2])
-            .then(thirdResponse => thirdResponse.json())
-            .then(thirdData => {
-              fetch(urls[3])
-                .then(fourthResponse => fourthResponse.json())
-                .then(fourthData => {
-                  fetch(urls[4])
-                    .then(fifthResponse => fifthResponse.json())
-                    .then(fifthData => {
-                      console.log([firstData, scndData, thirdData, fourthData, fifthData]);
-                    });
-                });
-            });
-        });
-    });
+  const result = URLS.reduce((acc, next) => {
+    return acc.then(chainData =>
+      makeRequest(next).then(currentData => [...chainData, currentData])
+    );
+  }, Promise.resolve([]));
+
+  result.then(dataArray => {
+    console.log('SEQUENTIAL:');
+    console.log(dataArray);
+  });
 }

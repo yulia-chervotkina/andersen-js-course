@@ -1,5 +1,3 @@
-import Musician from './asynchronous-programming/Musician';
-
 // import { foo, createCb } from './asynchronous-programming/task_1';
 // import { parseJSON, successCb, failureCb } from './asynchronous-programming/task_2';
 // import delay from './asynchronous-programming/task_3';
@@ -9,6 +7,7 @@ import Musician from './asynchronous-programming/Musician';
 // import foo from './asynchronous-programming/task_7';
 // import foo from './asynchronous-programming/task_8';
 // import foo from './asynchronous-programming/task_9';
+// import Musician from './asynchronous-programming/Musician';
 
 console.log('DRATUTI');
 
@@ -58,5 +57,5 @@ console.log('DRATUTI');
 
 // console.log('==================================');
 
-const musician = new Musician('https://jsonplaceholder.typicode.com/albums');
-musician.getAlbums().then(albums => console.log(albums));
+// const musician = new Musician('https://jsonplaceholder.typicode.com/albums');
+// musician.getAlbums().then(albums => console.log(albums));
