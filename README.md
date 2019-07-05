@@ -1,15 +1,12 @@
-# Andersen JS Course
+# Recipe client\server app
 
-Репозиторий с задачами для курса Andersen JS. Вам необходимо сделать fork этого репозитория, чтобы начать работу над задачами в рамках курса.
+Cooking is easy!
 
-## Перед запуском
-1. Установите NodeJS (версию Current) - https://nodejs.org/en/
-2. Установите Yarn - https://yarnpkg.com/ru/
-3. Если вы еще не поставили себе редактор кода, то можете поставить VSCode - https://code.visualstudio.com/
-4. Для удобства разработки вам понадобятся плагины для ESlint (https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) и Prettier (https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+## Start app
 
-## Подготовка к запуску
-* Находясь в папке с проектом выполните в консоле команду `yarn`. Эта команда установит все необходимые пакеты зависимостей.
+- Run `yarn start-server` to start server. Server needs Internet to connect Database. Server works on 8080 port.
+- Run `yarn start-client` to launch client. It will connect to server automaticly, so make sure to start server first. Client works on 3030 port.
 
-## Запуск приложения
-* Выполните команду `yarn start`. После этого у вас должен подняться локальный сервер, открыться новая вкладка в браузере, и вы можете приступать к работе.
+## How to use
+
+You can make new recipes with "Add new recipe" button. You can edit, favor or delete existing recipes. You can filter recipes by favorites with "Favorites" button. If you need to show all recipes, click on "Recipe" button.
