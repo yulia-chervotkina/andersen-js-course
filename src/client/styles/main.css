@@ -1,0 +1,70 @@
+body {
+  background: #f9f9e1;
+}
+
+.navbar {
+  background: #f8874f;
+}
+.nav-link,
+.navbar-brand {
+  color: #f4f4f4;
+  cursor: pointer;
+}
+.nav-link {
+  margin-right: 1em !important;
+}
+.nav-link:hover {
+  background: #ffbc93;
+  color: #f4f4f4;
+}
+.navbar-collapse {
+  justify-content: flex-end;
+}
+.navbar-toggler {
+  background: #fff !important;
+}
+
+.recipe-list {
+  margin: 5em 0;
+  position: relative;
+}
+.card {
+  background: #f2efd1;
+  box-shadow: 0 0 20px #ccc;
+  transition: all 0.2s ease-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card .img {
+  width: 1.5em;
+  height: 1.5em;
+}
+.card-title {
+  color: #f97300;
+}
+.card-subtitle {
+  color: darkslategrey;
+}
+.card-body {
+  padding: 1em;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form {
+  width: 40vw;
+  height: 100%;
+}
+
+.btn,
+.img,
+.navbar-brand,
+.nav-link {
+  cursor: pointer;
+}
