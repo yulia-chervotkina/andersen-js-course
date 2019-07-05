@@ -12,7 +12,7 @@ body {
 }
 
 .navbar-brand {
-  font-size: 1.4em;
+  font-size: 1.4Aem;
 }
 
 .nav-link,
@@ -31,6 +31,8 @@ body {
 }
 
 .navbar-collapse {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
   justify-content: flex-end;
 }
 
@@ -45,11 +47,16 @@ body {
 
 .card {
   background: #f2efd1;
+  -webkit-box-shadow: 0 0 20px #ccc;
   box-shadow: 0 0 20px #ccc;
+  -webkit-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
 }
 
 .card:hover {
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
   transform: scale(1.05);
 }
 
@@ -74,7 +81,11 @@ body {
 }
 
 .card-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
   justify-content: space-between;
 }
 
