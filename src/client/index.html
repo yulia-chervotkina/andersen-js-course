@@ -1,158 +1,128 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <title>Recipe</title>
-  </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-      <a class="navbar-brand" href="#">Recipe</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#collapsed-content"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="collapsed-content">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link new-recipe" href="#">Add new Recipe</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link favorites" href="#">Favorites</a>
-          </li>
-        </ul>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Recipe</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <a class="navbar-brand" href="#">Recipe</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsed-content">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsed-content">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link new-recipe" href="#">Add new Recipe</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link favorites" href="#">Favorites</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="recipe-list">
+    <div class="container">
+      <div class="row">
+
       </div>
-    </nav>
+    </div>
+  </div>
+  </div>
 
-    <div class="recipe-list">
-      <div class="container">
-        <div class="row">
-          
-          </div>
+  <div class="modal" tabindex="-1" role="dialog" id="newRecipe">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">New Recipe</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form class='form'>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" placeholder="What's the name of the recipe?" />
+            </div>
+            <div class="form-group">
+              <label for="ingredients">Ingredients</label>
+              <textarea type="text" class="form-control" id="ingredients"
+                placeholder="What ingredients do you need??"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="instructions">Instruction</label>
+              <textarea type="text" class="form-control" id="instructions" placeholder="Some instructions?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Cancel</button>
+          </form>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="modal" tabindex="-1" role="dialog" id="newRecipe">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">New Recipe</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+  <div class="modal" tabindex="-1" role="dialog" id="editRecipe">
+    <div class="modal-dialog modal-lg " role="document">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Recipe</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
-          <!-- Modal body -->
-          <div class="modal-body">
-            <form class='form'>
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="name"
-                  placeholder="What's the name of the recipe?"
-                />
-              </div>
-              <div class="form-group">
-                <label for="ingredients">Ingredients</label>
-                <textarea
-                  type="text"
-                  class="form-control"
-                  id="ingredients"
-                  placeholder="What ingredients do you need??"
-                ></textarea>
-              </div>
-              <div class="form-group">
-                <label for="instructions">Instruction</label>
-                <textarea
-                  type="text"
-                  class="form-control"
-                  id="instructions"
-                  placeholder="Some instructions?"
-                  ></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-              <button type="reset" class="btn btn-secondary">Cancel</button>
-            </form>
-          </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form class="form">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="editName" placeholder="What's the name of the recipe?" />
+            </div>
+            <div class="form-group">
+              <label for="ingredients">Ingredients</label>
+              <textarea type="text" class="form-control" id="editIngredients"
+                placeholder="What ingredients do you need??"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="instructions">Instruction</label>
+              <textarea type="text" class="form-control" id="editInstructions"
+                placeholder="Some instructions?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Cancel</button>
+          </form>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="modal" tabindex="-1" role="dialog" id="editRecipe">
-      <div class="modal-dialog modal-lg " role="document">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">Edit Recipe</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-          <!-- Modal body -->
-          <div class="modal-body">
-            <form class="form">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editName"
-                  placeholder="What's the name of the recipe?"
-                />
-              </div>
-              <div class="form-group">
-                <label for="ingredients">Ingredients</label>
-                <textarea
-                  type="text"
-                  class="form-control"
-                  id="editIngredients"
-                  placeholder="What ingredients do you need??"
-                  ></textarea>
-              </div>
-              <div class="form-group">
-                <label for="instructions">Instruction</label>
-                <textarea
-                  type="text"
-                  class="form-control"
-                  id="editInstructions"
-                  placeholder="Some instructions?"
-                  ></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-              <button type="reset" class="btn btn-secondary">Cancel</button>
-            </form>
-          </div>
+  <div class="modal" tabindex="-1" role="alertdialog" id="error">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Error</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
+</body>
 
-    <div class="modal" tabindex="-1" role="alertdialog" id="error">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Error</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
 </html>

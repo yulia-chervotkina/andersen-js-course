@@ -5,21 +5,26 @@ body {
 .navbar {
   background: #f8874f;
 }
+
 .nav-link,
 .navbar-brand {
   color: #f4f4f4;
   cursor: pointer;
 }
+
 .nav-link {
   margin-right: 1em !important;
 }
+
 .nav-link:hover {
   background: #ffbc93;
   color: #f4f4f4;
 }
+
 .navbar-collapse {
   justify-content: flex-end;
 }
+
 .navbar-toggler {
   background: #fff !important;
 }
@@ -28,6 +33,7 @@ body {
   margin: 5em 0;
   position: relative;
 }
+
 .card {
   background: #f2efd1;
   box-shadow: 0 0 20px #ccc;
@@ -42,12 +48,15 @@ body {
   width: 1.5em;
   height: 1.5em;
 }
+
 .card-title {
   color: #f97300;
 }
+
 .card-subtitle {
   color: darkslategrey;
 }
+
 .card-body {
   padding: 1em;
 }
