@@ -201,6 +201,7 @@ class View extends EventEmitter {
     ingredients.innerText = ingr;
 
     const instrSubtitle = d.createElement('h5');
+    instrSubtitle.classList.add('card-subtitle');
     instrSubtitle.innerText = 'Instruction:';
 
     const instruction = d.createElement('p');

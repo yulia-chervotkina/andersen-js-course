@@ -1,9 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway|Lato|Poppins');
+
 body {
   background: #f9f9e1;
 }
 
 .navbar {
   background: #f8874f;
+  font-family: "Raleway";
+  font-size: 1.25em;
+  font-weight: 700;
+}
+
+.navbar-brand {
+  font-size: 1.4em;
 }
 
 .nav-link,
@@ -51,14 +60,17 @@ body {
 
 .card-title {
   color: #f97300;
+  font-family: "Lato";
 }
 
 .card-subtitle {
   color: darkslategrey;
+  font-family: "Lato";
 }
 
 .card-body {
   padding: 1em;
+  font-family: "Lato";
 }
 
 .card-footer {
@@ -69,6 +81,10 @@ body {
 .form {
   width: 40vw;
   height: 100%;
+}
+
+.modal {
+  font-family: "Poppins";
 }
 
 .btn,
