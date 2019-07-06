@@ -12,7 +12,7 @@ body {
 }
 
 .navbar-brand {
-  font-size: 1.4Aem;
+  font-size: 1.4em;
 }
 
 .nav-link,
@@ -26,7 +26,7 @@ body {
 }
 
 .nav-link:hover {
-  background: #ffbc93;
+  background: #fbc3a7;
   color: #f4f4f4;
 }
 
@@ -55,9 +55,9 @@ body {
 }
 
 .card:hover {
-  -webkit-transform: scale(1.05);
-  -ms-transform: scale(1.05);
-  transform: scale(1.05);
+  -webkit-transform: scale(1.025);
+  -ms-transform: scale(1.025);
+  transform: scale(1.025);
 }
 
 .card .img {
@@ -71,7 +71,7 @@ body {
 }
 
 .card-subtitle {
-  color: darkslategrey;
+  color: #63361f;
   font-family: "Lato";
 }
 
