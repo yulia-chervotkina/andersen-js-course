@@ -1,5 +1,4 @@
-import fetch from 'node-fetch';
-
+/* eslint-disable no-undef */
 class Musician {
   constructor(albumsUrl) {
     this.albumsUrl = albumsUrl;

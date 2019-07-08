@@ -1,5 +1,4 @@
-import fetch from 'node-fetch';
-
+/* eslint-disable no-undef */
 const getUsers = url => fetch(url);
 
 export default async function foo(url) {
