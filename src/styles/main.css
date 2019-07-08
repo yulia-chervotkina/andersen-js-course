@@ -1,0 +1,470 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.window,
+.craftControl,
+.inventoryControl {
+  display: -webkit-box;
+  display: -ms-flexbox;
+
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+}
+
+.window {
+  min-height: 100vh;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: #1e1d23;
+}
+
+.moving {
+  opacity: 0.25;
+  -webkit-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8);
+}
+
+.inventorySpace {
+  display: -webkit-box;
+  display: -ms-flexbox;
+
+  display: flex;
+  -ms-flex-preferred-size: 30%;
+  flex-basis: 30%;
+  min-height: 90vh;
+  border: 2px solid #ffad01;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.recipeInvSpace {
+  display: -webkit-box;
+  display: -ms-flexbox;
+
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  min-height: 90vh;
+}
+.newRecipeCraftZone,
+.newRecipeSpace,
+.craftZone {
+  display: -webkit-box;
+  display: -ms-flexbox;
+
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.newRecipeCraftZone {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.infoWindow {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  background: #1e1d23;
+  position: relative;
+  z-index: 3;
+  width: 50%;
+  height: 50%;
+  padding: 1% 4% 3% 4%;
+}
+
+.errorWindow {
+  display: none;
+  background: #1e1d23;
+  position: absolute;
+  top: 30%;
+  z-index: 3;
+  width: 55%;
+  height: 2%;
+  padding: 3% 2.5% 3% 2.5%;
+}
+
+.mineControl {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.modal {
+  display: none;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  background: rgba(188, 188, 191, 0.2);
+}
+
+.newRecipeWindow {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  background: #1e1d23;
+  width: 30%;
+  min-height: 90vh;
+  position: absolute;
+  z-index: 1;
+}
+
+.newRecipeName {
+  margin: 0% 5% 8% 5%;
+  height: 40px;
+  width: 90%;
+  padding: 0 15px;
+  background: #1e1d23;
+  border: 2px solid #ffad01;
+  color: #ffad01;
+  border-radius: 2px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 23px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  letter-spacing: 0.05em;
+}
+
+.newRecipeName::-webkit-input-placeholder {
+  color: #ffad01;
+}
+
+.newRecipeName:-ms-input-placeholder {
+  color: #ffad01;
+}
+
+.newRecipeName::-ms-input-placeholder {
+  color: #ffad01;
+}
+
+.newRecipeName::placeholder {
+  color: #ffad01;
+}
+
+.newRecipeSpace {
+  display: -webkit-box;
+  display: -ms-flexbox;
+
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 75vh;
+}
+
+.newRecipeControl {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.craftZone {
+  min-height: 70vh;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+}
+
+.workSpace {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-preferred-size: 30%;
+  flex-basis: 30%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-height: 90vh;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.recipeSpace {
+  -ms-flex-preferred-size: 30%;
+  flex-basis: 30%;
+  min-height: 90vh;
+  border: 2px solid #ffad01;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.infoText {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 120%;
+  color: #ffad01;
+}
+
+.errorMsg {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 120%;
+  color: #ffad01;
+}
+
+span {
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 22px;
+}
+.infoImg {
+  width: 23px;
+  height: 23px;
+}
+.closeBtn {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  width: 20px;
+  height: 20px;
+}
+
+.inventory {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.title {
+  font-weight: 900;
+  color: #ffad01;
+  text-transform: uppercase;
+  font-family: 'Roboto';
+  font-size: 2vw;
+  text-align: center;
+  cursor: default;
+  padding-top: 4%;
+  line-height: 6vh;
+  min-height: 4vh;
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+}
+header {
+  padding-top: 0px;
+}
+.trashZone {
+  width: 100%;
+  min-height: 10vh;
+  line-height: 8.5vh;
+  border-top: 2px solid #ffad01;
+  background: rgba(255, 173, 1, 0.15);
+}
+.newRecipeControl {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.button {
+  display: block;
+  position: relative;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  height: 5vh;
+  width: 12vw;
+  -webkit-box-shadow: 0 6px #986500;
+  box-shadow: 0 6px #986500;
+  font-weight: 800;
+  font-family: 'Roboto';
+  line-height: 4vh;
+  background: #ffad01;
+  color: black;
+  margin: 10px;
+}
+
+.button_cancel {
+  background: #343338;
+  color: #ffad01;
+}
+
+.button:hover {
+  -webkit-box-shadow: 0 4px #986500;
+  box-shadow: 0 4px #986500;
+  top: 2px;
+}
+
+.button:active {
+  -webkit-box-shadow: 0 0 #986500;
+  box-shadow: 0 0 #986500;
+  top: 6px;
+}
+
+.item,
+.recipe {
+  color: black;
+  padding: 5px;
+  text-align: center;
+  line-height: 95px;
+  text-transform: uppercase;
+  font-family: 'Roboto';
+  font-size: 18px;
+  cursor: default;
+  width: 95px;
+  height: 95px;
+  border-radius: 2px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  transition: -webkit-transform 0.2s ease-out;
+  -o-transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
+}
+
+.newRecipeBtn {
+  font-size: 22px;
+  line-height: 100px;
+  color: #ffad01;
+  background: rgba(255, 173, 1, 0.15);
+  cursor: pointer;
+}
+
+.slot {
+  padding: 4px;
+  border: 2px solid #ffad01;
+  width: 105px;
+  height: 105px;
+  margin: 1% 3px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+
+.forgeRecipeSlot {
+  width: 170px;
+  height: 170px;
+  flex-shrink: 0;
+}
+
+.trashZone:hover,
+.newRecipeBtn:hover {
+  background: rgba(255, 173, 1, 0.3);
+}
+
+.slot:hover,
+.forgeRecipeSlot:hover {
+  background: rgba(255, 173, 1, 0.15);
+}
+
+.recipe {
+  background: #ffe28a;
+}
+
+.copper {
+  background: #b37a5d;
+}
+
+.silver {
+  background: #b8ac9d;
+}
+
+.gold {
+  background: #e4c24a;
+}
+
+.iron {
+  background: #989897;
+}
+
+.nickel {
+  background: #8b806c;
+}
+
+.brass {
+  background: #ac8c5d;
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mine</title>
+  </head>
+  <body>
+    <div class="window">
+      <div class="inventorySpace">
+        <div class="title">Inventory</div>
+        <div class="inventory" id="itemInv"></div>
+        <div class="trashZone title">
+          Trash zone
+        </div>
+      </div>
+      <div class="workSpace">
+        <div class="craftZone">
+          <div class="title">Craft zone</div>
+          <div class="slot forgeRecipeSlot"></div>
+          <button class="button" id="forgeBtn">Forge</button>
+          <div class="inventory" id="forgeInv"></div>
+        </div>
+        <div class="mineControl">
+          <button class="button" id="mineBtn">Mine</button>
+          <img id="infoBtn" class="infoImg" src="images/info.svg" alt="info" />
+        </div>
+      </div>
+      <div class="recipeSpace">
+        <div class="newRecipeWindow">
+          <div class="title">New recipe</div>
+          <div class="newRecipeSpace">
+            <div class="newRecipeCraftZone">
+              <input class="newRecipeName" type="text" placeholder="Name" maxlength="7" />
+              <div class="inventory" id="newRecipeInv"></div>
+            </div>
+            <div class="newRecipeControl">
+              <button id="cancelRecipeBtn" class="button button_cancel">Cancel</button>
+              <button id="createRecipeBtn" class="button">Create</button>
+            </div>
+          </div>
+        </div>
+        <div class="recipeInvSpace">
+          <div class="title">Recipe</div>
+          <div class="inventory" id="recipeInv">
+            <div class="slot item newRecipeBtn">+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal">
+        <div class="infoWindow">
+          <img class="closeBtn" src="images/close.svg" alt="close" />
+          <div class="title">MINE</div>
+          <div class="infoText">
+            <p>
+              To start game press <span>MINE</span> to find some ores. Found ores will appear in
+              your inventory.
+            </p>
+            <p>
+              Next you need to create a recipe. You can do this by pressing <span>'+' </span> button
+              in your <span>RECIPE</span> inventory. Your <span>RECIPE</span> inventory will be
+              replaced with <span>NEW RECIPE</span> window.
+            </p>
+            <p>
+              To create new recipe, you need to drop some items to <span>NEW RECIPE</span> window
+              slots and write name of recipe. After creating, new recipe will appear in your
+              <span>RECIPE</span> inventory. Note: new item, created with this recipe will has same
+              name.
+            </p>
+            <p>Only recipes can be placed in <span>RECIPE</span> inventory.</p>
+            <p>
+              To <span>FORGE</span> item you need to drop recipe to a recipe big slot at CRAFT
+              space, and drop requred items to slots below. New item will appear in your
+              <span>INVENTORY</span> Only items and ores can be placed in <span>INVENTORY</span>.
+            </p>
+            <p>
+              If you want to delete any ore, item or recipe you can drop it to
+              <span>TRASH ZONE</span>. You can open info window with
+              <img class="infoImg" src="images/info.svg" alt="info" /> button.
+            </p>
+          </div>
+        </div>
+        <div class="errorWindow">
+          <img class="closeBtn" src="images/close.svg" alt="close" />
+          <div class="errorMsg">
+            To create new recipe, you need to drop some items to <span>NEW RECIPE</span> window
+            slots and write name.
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
