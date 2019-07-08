@@ -3,7 +3,7 @@ import * as ORES from '../constants/ores';
 
 export function takeItemsFrom(place, selector) {
   const itemsList = place.querySelectorAll(selector);
-  return Array.prototype.slice.call(itemsList);
+  return Array.from(itemsList);
 }
 
 export function createSlot() {

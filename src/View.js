@@ -116,7 +116,7 @@ class View extends EventEmitter {
     const itemNames = itemsArray.map(elem => elem.innerText);
 
     const recipeNameInput = this.newRecipeWindow.querySelector('.newRecipeName');
-    const recipeName = recipeNameInput.value;
+    const { value: recipeName } = recipeNameInput.value;
     if (!recipeName) {
       throw new Error(ERRORS.NO_NAME);
     }
