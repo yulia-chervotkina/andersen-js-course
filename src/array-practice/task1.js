@@ -14,3 +14,9 @@
  * console.log(any([0, 0, 1, 0])); -> true
  * console.log(any([0, 0, 0, 0])); -> false
  */
+
+export const any = (arr, cb = a => !!a) => {
+  return arr.some(cb);
+};
+
+export default any;

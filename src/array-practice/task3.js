@@ -9,3 +9,9 @@
  *
  * forEachRight([1, 2, 3, 4], val => console.log(val)); -> в консоль 4 3 2 1
  */
+
+const forEachRight = (array, cb) => {
+  [...array].sort((a, b) => b - a).forEach(cb);
+};
+
+export default forEachRight;
