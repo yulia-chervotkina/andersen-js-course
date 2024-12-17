@@ -7,11 +7,12 @@
  * console.log(task3Old(['hello', 'test', 12])); ->  [ 1, 2, 'hello', 'test', 12 ]
  */
 
-export function task3Old(params) {
-  return [1, 2].concat(params);
-}
+// export function task3Old(params) {
+//   return [1, 2].concat(params);
+// }
 
 // Напишите реализацию функции task3Old на ES6+ ниже этого комментария.
 // При желании, можете использовать стрелочную функцию, вместо обычной
 
-export function task3New() {}
+const task3New = params => [1, 2, ...params];
+console.log(task3New(['hello', 'test', 12])); // [ 1, 2, 'hello', 'test', 12 ]
