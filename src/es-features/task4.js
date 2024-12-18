@@ -30,4 +30,25 @@ export function task4Old() {
 // Напишите реализацию функции task4Old на ES6+ ниже этого комментария.
 // При желании, можете использовать стрелочную функцию, вместо обычной
 
-export function task4New() {}
+export const task4New = () => {
+  const x = 10;
+  const y = 20;
+
+  const obj = {
+    x: x,
+    y: y,
+    bar: function bar() {
+      return this.x + this.y;
+    },
+  };
+
+  const foo = () => 'test';
+
+  obj[`baz${foo()}`] = 'new field';
+
+  return obj;
+};
+
+const obj = task4New();
+console.log(task4New());
+console.log(obj.bar());
