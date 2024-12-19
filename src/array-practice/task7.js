@@ -11,3 +11,22 @@
  * console.log(take([1, 2, 3], 5)); -> [1, 2, 3]
  * console.log(take([1, 2, 3], 2)); -> [1, 2]
  */
+
+// function take(array, num) {
+//   const result = [];
+//   if (num > array.length) {
+//     num = array.length;
+//   }
+//   for (let i = 0; i < num; i++) {
+//     result.push(array[i]);
+//   }
+//   return result;
+// }
+
+export const take = (array, num) => {
+  const limit = Math.min(num, array.length);
+  return array.slice(0, limit);
+};
+
+console.log(take([1, 2, 3], 2));
+console.log(take([1, 2, 3], 5));
