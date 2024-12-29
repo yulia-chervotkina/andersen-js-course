@@ -14,3 +14,13 @@
  * console.log(any([0, 0, 1, 0])); -> true
  * console.log(any([0, 0, 0, 0])); -> false
  */
+
+export const any = (arr, fn) => {
+  const buffer = [...arr];
+  if (fn !== undefined) {
+    return buffer.some(fn) === true ? 'true' : 'false';
+  }
+  if (fn === undefined) {
+    return buffer.some(el => el == true);
+  }
+};
