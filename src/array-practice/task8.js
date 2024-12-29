@@ -11,3 +11,11 @@
  * console.log(without([2, 1, 2, 3], 1, 2)) -> [3]
  * console.log(without([2, 1, 10, 20], 1, 2)) -> [10, 20]
  */
+
+const without = (array, ...params) => {
+  const result = array.filter(num => !params.includes(num));
+  return result;
+};
+
+console.log(without([2, 1, 2, 3], 1, 2));
+console.log(without([2, 1, 10, 20], 1, 2));
