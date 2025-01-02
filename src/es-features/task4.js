@@ -35,9 +35,9 @@ export const task4New = () => {
   const y = 20;
 
   const obj = {
-    x: x,
-    y: y,
-    bar: function bar() {
+    x,
+    y,
+    bar() {
       return this.x + this.y;
     },
   };
