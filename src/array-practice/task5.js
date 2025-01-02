@@ -14,13 +14,12 @@
  * generator.next(); -> 'Complete!'
  */
 
-export const createGenerator = arr => {
+const createGenerator = arr => {
   const buffer = [...arr];
-  let i = 0;
   return {
     next: () => {
-      if (i < buffer.length) {
-        return buffer[i++];
+      if (buffer.length > 0) {
+        return buffer.shift();
       }
       return 'Complete!';
     },

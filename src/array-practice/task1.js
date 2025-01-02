@@ -16,11 +16,10 @@
  */
 
 export const any = (arr, fn) => {
-  const buffer = [...arr];
   if (fn !== undefined) {
-    return buffer.some(fn) === true ? 'true' : 'false';
+    return arr.some(fn) === true;
   }
   if (fn === undefined) {
-    return buffer.some(el => el == true);
+    return arr.some(el => el == true);
   }
 };

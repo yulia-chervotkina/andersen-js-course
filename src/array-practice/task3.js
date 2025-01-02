@@ -10,4 +10,7 @@
  * forEachRight([1, 2, 3, 4], val => console.log(val)); -> в консоль 4 3 2 1
  */
 
-export const forEachRight = (array, fn) => array.reverse().forEach(fn);
+export const forEachRight = (array, fn) => {
+  const buffer = [...array];
+  buffer.reverse().forEach(fn);
+};

@@ -12,7 +12,4 @@
  * console.log(take([1, 2, 3], 2)); -> [1, 2]
  */
 
-export const take = (array, num) => {
-  const limit = Math.min(num, array.length);
-  return array.slice(0, limit);
-};
+export const take = (array, num) => array.slice(0, num);
