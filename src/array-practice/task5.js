@@ -13,3 +13,17 @@
  * generator.next(); -> 'Complete!'
  * generator.next(); -> 'Complete!'
  */
+
+const createGenerator = arr => {
+  const buffer = [...arr];
+  return {
+    next: () => {
+      if (buffer.length) {
+        return buffer.shift();
+      }
+      return 'Complete!';
+    },
+  };
+};
+
+const generator = createGenerator([1, '6', 3, 2]);
