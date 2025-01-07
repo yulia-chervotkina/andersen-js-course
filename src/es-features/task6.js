@@ -28,7 +28,7 @@
 // Напишите реализацию функции task6Old на ES6+ ниже этого комментария.
 // При желании, можете использовать стрелочную функцию, вместо обычной
 
-export const task6New = () => {
+const task6New = () => {
   const userModule = () => ({
     name: 'Max',
     value: 100,
@@ -36,13 +36,12 @@ export const task6New = () => {
     cases: [{ id: '1' }],
   });
 
-  const user = userModule();
   const {
     name,
     value,
     role: { name: occupation },
     cases: [{ id }],
-  } = user;
-  const isActive = user.isActive === true;
+  } = userModule();
+  const isActive = !!userModule().isActive;
   return [name, value, occupation, isActive, id];
 };
