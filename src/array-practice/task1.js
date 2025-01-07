@@ -17,9 +17,9 @@
 
 export const any = (arr, fn) => {
   if (fn !== undefined) {
-    return arr.some(fn) === true;
+    return arr.some(fn);
   }
   if (fn === undefined) {
-    return arr.some(el => el == true);
+    return arr.some(Boolean);
   }
 };

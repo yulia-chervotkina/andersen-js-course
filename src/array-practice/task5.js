@@ -18,7 +18,7 @@ const createGenerator = arr => {
   const buffer = [...arr];
   return {
     next: () => {
-      if (buffer.length > 0) {
+      if (buffer.length) {
         return buffer.shift();
       }
       return 'Complete!';
