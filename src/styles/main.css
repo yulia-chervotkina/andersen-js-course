@@ -1,8 +1,60 @@
-body {
-  margin: 0;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+:root {
+    --main-font-fam: "Roboto";
+    --accent-color: rgb(253, 166, 44);
+    --main-bg-color: rgb(28, 27, 32);
+
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: var(--main-font-fam);
 }
 
 h1 {
-  text-align: center;
+    color: var(--accent-color);
+    letter-spacing: 0.1em;
 }
+#ruleset {
+    width: 50%;
+    padding: 25px;
+    border: solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+    font-size: 18px;
+}
+
+.icon {
+    background-color: transparent;
+    border: none;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.button {
+    background-color: var(--accent-color);
+    border: none;
+    cursor: pointer;
+    width: 10%;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: var(--main-bg-color);
+    padding: 10px 0;
+    box-shadow: 0 5px rgb(140, 92, 24);
+}
+
+.button:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px rgb(140, 92, 24);
+
+}
+
+button:active {
+    transform: translateY(2px);
+}
+
