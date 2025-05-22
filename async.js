@@ -31,12 +31,9 @@ function sumArray(arr, sucCb, failCb) {
 
 function getData() {
   fetch('https://api.kanye.rest')
-    .then(response => {
-      if (!response.ok) throw response;
-      fetchFunc('https://api.kanye.rest');
-    })
-    .catch(err => {
-      console.error('Error fatal', err);
+    .then(getResponse)
+    .then(data => {
+      if (data.quote) fetch('https://api.kanye.rest');
     });
 }
 
@@ -93,16 +90,21 @@ async function sumPromises() {
 // to 'https://api.kanye.rest' - if it has a quote, make another one.
 
 async function getKanye() {
-  try {
-    const response1 = await fetch('https://api.kanye.rest');
-    if (response1.ok) {
-      const response2 = await fetch('https://api.kanye.rest');
-      const data2 = await response2.json();
-      printData(data2);
-    }
-  } catch (err) {
-    console.error('no Kanye for you today go read Dostoyevsky', err);
+  const response1 = await fetch('https://api.kanye.rest');
+  const data1 = await response1.json();
+  if (data1.quote) {
+    const response2 = await fetch('https://api.kanye.rest');
   }
+
+  //     try {
+  //     const response1 = await fetch('https://api.kanye.rest');
+  //     const data1 = await response1.json();
+  //     if (data1.quote) {
+  //       const response2 = await fetch('https://api.kanye.rest');
+  //     }
+  //   } catch (err) {
+  //     console.error('no Kanye for you today go read Dostoyevsky', err);
+  //   }
 }
 
 // Task #Hell
