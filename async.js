@@ -1,3 +1,11 @@
+const getResponse = response => response.json();
+const printData = data => console.log(data);
+const fetchFunc = url => {
+  fetch(url)
+    .then(getResponse)
+    .then(printData);
+};
+
 // Task #1
 //
 // Write sumArray function, that will accept array, success callback,
@@ -6,12 +14,14 @@
 // if error occurs or elements are not numbers - it should invoke fail cb.
 
 function sumArray(arr, sucCb, failCb) {
-  const sum = arr.reduce((acc, val) => acc + val, 0);
-  if (Number(sum)) sucCb(sum);
-  if (!Number(sum)) failCb(sum);
+  if (!Array.isArray(arr)) return failCb();
+  const isNumber = arr.every(el => typeof el === 'number');
+  if (!isNumber) return failCb();
+  if (isNumber) {
+    const sum = arr.reduce((acc, val) => acc + val, 0);
+    sucCb(sum);
+  }
 }
-sumArray([1, 2, 3, 4, 5], console.log, console.log);
-sumArray([1, 2, {}, 4, 5], console.log, () => console.log("error"));
 
 // Task #2
 
@@ -20,12 +30,15 @@ sumArray([1, 2, {}, 4, 5], console.log, () => console.log("error"));
 // make another one. No async/await
 
 function getData() {
-  return fetch("https://api.kanye.rest")
-    .then((responce) => responce.json())
-    .then((data) => console.log(data));
+  fetch('https://api.kanye.rest')
+    .then(response => {
+      if (!response.ok) throw response;
+      fetchFunc('https://api.kanye.rest');
+    })
+    .catch(err => {
+      console.error('Error fatal', err);
+    });
 }
-
-getData().then(getData());
 
 // Task #3
 
@@ -35,63 +48,44 @@ getData().then(getData());
 function getDataFromKanye() {
   // 5 parallel requests
   const urls = [
-    "https://api.kanye.rest",
-    "https://api.kanye.rest",
-    "https://api.kanye.rest",
-    "https://api.kanye.rest",
-    "https://api.kanye.rest",
+    'https://api.kanye.rest',
+    'https://api.kanye.rest',
+    'https://api.kanye.rest',
+    'https://api.kanye.rest',
+    'https://api.kanye.rest',
   ];
-  Promise.all(
-    urls.map((url) =>
-      fetch(url)
-        .then((responce) => responce.json())
-        .then((data) => console.log(data))
-    )
-  );
+  Promise.all(urls.map(url => fetchFunc(url)));
 
   // 5 sequential requests
 
-  const sequental = async function () {
-    const responce = await fetch("https://api.kanye.rest");
-    const data = await responce.json();
-    console.log(data);
+  const sequental = async function(urls) {
+    const arrayOfPromises = urls.map(url => fetch(url));
+    for await (let response of arrayOfPromises) {
+      const data = await response.json();
+    }
   };
-
-  return sequental()
-    .then(sequental())
-    .then(sequental())
-    .then(sequental())
-    .then(sequental());
+  return sequental(urls);
 }
-
-getDataFromKanye();
 
 // Task #4
 // Write function that will return rejected promise with
 // {reason: 'intentional'} value.
 
 function rejected() {
-  return Promise.reject("{reason: 'intentional'}").catch((error) =>
-    console.error(error)
-  );
+  return Promise.reject({ reason: 'intentional' });
 }
-
-rejected();
 
 // Task #5
 // Create 3 Promises that will resolve to numbers
 // and then console log sum of these numbers. Async/await is required.
 
-const firstPromise = new Promise((resolve) => resolve(10));
-const secondPromise = new Promise((resolve) => resolve(15));
-const thirdPromise = new Promise((resolve) => resolve(25));
-const allPromises = Promise.all([firstPromise, secondPromise, thirdPromise]);
-
 async function sumPromises() {
-  const promise = await allPromises;
+  const promise1 = Promise.resolve(10);
+  const promise2 = Promise.resolve(15);
+  const promise3 = Promise.resolve(25);
+  const promise = await Promise.all([promise1, promise2, promise3]);
   console.log(promise.reduce((val, acc) => val + acc, 0));
 }
-sumPromises();
 
 // Task #6
 // Write Task #2 with async/await
@@ -99,12 +93,17 @@ sumPromises();
 // to 'https://api.kanye.rest' - if it has a quote, make another one.
 
 async function getKanye() {
-  const responce = await fetch("https://api.kanye.rest");
-  const data = await responce.json();
-  console.log(data);
+  try {
+    const response1 = await fetch('https://api.kanye.rest');
+    if (response1.ok) {
+      const response2 = await fetch('https://api.kanye.rest');
+      const data2 = await response2.json();
+      printData(data2);
+    }
+  } catch (err) {
+    console.error('no Kanye for you today go read Dostoyevsky', err);
+  }
 }
-
-getKanye().then(getKanye());
 
 // Task #Hell
 
@@ -148,5 +147,5 @@ getKanye().then(getKanye());
 // Now, since there's nothing in the callstack,it's time for the code we saved for later
 
 4; // this setTimeout goes first because it's waiting time is 0
-5; //
+5; // since it's chained to the setTimeout and is supposed to print after setTimeout finishes
 1; // this setTimeout follows
