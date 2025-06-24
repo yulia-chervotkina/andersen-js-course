@@ -2,23 +2,126 @@
     --main-font-fam: "Roboto";
     --accent-color: rgb(253, 166, 44);
     --main-bg-color: rgb(28, 27, 32);
-
 }
 
 * {
     padding: 0;
     margin: 0;
     font-family: var(--main-font-fam);
+    background-color: var(--main-bg-color);
+}
+
+.copper {background: #b37a5d}
+.silver {background: #b8ac9d}
+.gold {background: #e4c24a}
+.iron {background: #989897}
+.nickel {background: #8b806c}
+.brass {background: #ac8c5d}
+.user-recipe {background: rgb(250, 227, 150)}
+.item {background: rgb(173, 188, 255)}
+
+#main-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 100hv;
+}
+
+#inventory-container, #crafting, #recipe, #new-recipe {
+    border: solid var(--accent-color);
+    justify-content: center;
+    justify-items: center;
+    height: 90vh;
+    margin: 20px auto;
+}
+
+#crafting {
+    border: none;
+}
+
+.inventory, #craft-slots, .recipe, #create-new-recipe {
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    grid-gap: 10px;
+    padding: 10px;
+    justify-content: center;
+    justify-items: center;
+}
+
+#recipe-template {
+    width: 150px;
+    height: 150px;
+    border: solid var(--accent-color);
+    margin-bottom: 40px;
+}
+
+.ore {
+    border: solid var(--accent-color);
+    width: 70px;
+    height: 70px;
+    text-transform: uppercase;
+    color: var(--main-bg-color);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    justify-items: center;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 h1 {
     color: var(--accent-color);
     letter-spacing: 0.1em;
+    padding: 50px;
 }
-#ruleset {
+
+#inventory-container {
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    align-content: space-between;
+    align-items: center;
+}
+
+#trash {
+    border-top: solid var(--accent-color);
+    width: 100%;
+    height: 12vh;
+    justify-content: center; 
+    justify-items: center;
+    padding: 0;
+    z-index: 0;
+}
+
+#trash h1 {
+    padding: 10px;
+}
+
+#new-recipe {
+    display: none;
+}
+
+.modal {
+    display: none;
+    justify-content: center; 
+    justify-items: center;
+    position: fixed;
+    z-index: 1;
+    padding-top: 150px;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
     width: 50%;
     padding: 25px;
-    border: solid;
+    border: solid var(--accent-color);
+    color: var(--accent-color);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,6 +129,12 @@ h1 {
     gap: 15px;
     font-size: 18px;
 }
+
+/* #no-recipe-name, #inventory-is-full {
+    height: max-content;
+    width:25%;
+    padding: 0;
+} */
 
 .icon {
     background-color: transparent;
@@ -38,23 +147,73 @@ h1 {
     background-color: var(--accent-color);
     border: none;
     cursor: pointer;
-    width: 10%;
+    width: 160px;
     text-transform: uppercase;
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 0.1em;
     color: var(--main-bg-color);
-    padding: 10px 0;
+    padding: 10px;
+    margin: 10px;
     box-shadow: 0 5px rgb(140, 92, 24);
 }
 
-.button:active {
+.button:active, .button:hover  {
     transform: translateY(2px);
     box-shadow: 0 3px rgb(140, 92, 24);
-
 }
 
-button:active {
+#forge {
+    margin-bottom: 30px;
+}
+
+#mine-button {
+    margin-top: 60px;
+}
+
+#cancel {
+    background-color: #555;
+    color: var(--accent-color);
+}
+
+#add-recipe {
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 24px;
+}
+
+svg {
+    background-color: transparent;
+}
+
+svg:hover {
     transform: translateY(2px);
 }
 
+#add-recipe:hover,  #add-recipe svg:hover {
+    background-color: var(--accent-color);
+    opacity: 0.3;
+}
+
+input {
+    border: solid var(--accent-color);
+    color: var(--accent-color);
+    padding-left: 5px;
+}
+
+input::placeholder {
+    color: var(--accent-color);
+}
+
+.dragging {
+    opacity: 0.5;
+    transform: scale(0.8);
+}
+
+.craft-zone-recipe {
+    width: 150px;
+    height: 150px;
+    opacity: 1;
+    transform: scale(0);
+}

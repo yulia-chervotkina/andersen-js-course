@@ -9,8 +9,4 @@ const model = new Model(emitter);
 const view = new View(emitter);
 const app = new Controller(model, view, emitter);
 
-document.addEventListener('DOMContentLoaded', () => {
-  emitter.emit('onDOMLoaded');
-});
-
-export default app;
+app.init();

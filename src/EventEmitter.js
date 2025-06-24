@@ -5,7 +5,8 @@ export default class EventEmitter {
 
   on(eventID, cb) {
     if (!Array.isArray(this.events[eventID])) this.events[eventID] = [];
-    if (!this.events[eventID].includes(cb)) this.events[eventID].push(cb);
+    // if (!this.events[eventID].includes(cb))
+    this.events[eventID].push(cb);
   }
 
   off(eventID, cb) {
