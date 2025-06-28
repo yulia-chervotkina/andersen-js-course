@@ -1,14 +1,21 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable class-methods-use-this */
 import Slot from './Slot';
 import Recipe from './Recipe';
 import Ore from './Ore';
 import Item from './Item';
+import { EVENT_TYPES } from './EventEmitter';
 
 export default class Model {
   constructor(emitter) {
     this.emitter = emitter;
     this.slotAreas = {};
+
+    this.emitter.on(EVENT_TYPES.CLICK_ADD, () => this.clearAllSlotsInContainer('newRecipe'));
+  }
+
+  init() {
+    this.initSlots('forge', 8);
+    this.initSlots('newRecipe', 8);
+    this.initSlots('recipeTemplate', 1);
   }
 
   saveInventoryData() {
@@ -21,12 +28,18 @@ export default class Model {
 
   loadInventoryData() {
     const savedArray = localStorage.getItem('inventory');
-    if (!savedArray) return [];
+    if (!savedArray) {
+      this.initSlots('inventory', 20);
+      return [];
+    }
+
     const parsedArray = JSON.parse(savedArray);
     const unpackedArray = parsedArray.map(slot => {
       const newSlot = new Slot(slot.isFilled);
       if (slot.content) {
-        newSlot.content = new Ore(slot.content.name, slot.content.weight);
+        const { type } = slot.content;
+        if (type === 'ore') newSlot.content = new Ore(slot.content.name);
+        if (type === 'item') newSlot.content = new Item(slot.content.name, slot.content.itemInfo);
       }
       return newSlot;
     });
@@ -36,7 +49,11 @@ export default class Model {
 
   loadRecipeData() {
     const savedArray = localStorage.getItem('recipe');
-    if (!savedArray) return [];
+    if (!savedArray) {
+      this.initSlots('recipe', 23);
+      return [];
+    }
+
     const parsedArray = JSON.parse(savedArray);
     const unpackedArray = parsedArray.map(slot => {
       const newSlot = new Slot(slot.isFilled);
@@ -51,7 +68,6 @@ export default class Model {
 
   createSlots(count) {
     const slots = [];
-    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < count; i++) {
       slots.push(new Slot(false));
     }
@@ -61,7 +77,7 @@ export default class Model {
   initSlots(areaName, count) {
     const slots = this.createSlots(count);
     this.slotAreas[areaName] = slots;
-    this.emitter.emit('slotsCreated', { areaName, slots });
+    this.emitter.emit(EVENT_TYPES.SLOTS_CREATED, { areaName, slots });
   }
 
   findFirstEmptySlotIndex(areaName) {
@@ -99,49 +115,14 @@ export default class Model {
     targetArea[index].isFilled = true;
   }
 
-  createRecipe(name) {
+  createRecipe(nameInput) {
     const targetArray = this.slotAreas.newRecipe;
     const oreInfo = targetArray.filter(obj => obj.content !== null);
-    const newRecipe = new Recipe(name, oreInfo);
+    const newRecipe = new Recipe(nameInput, oreInfo);
     return newRecipe;
   }
 
-  forgeItem() {
-    // taking recipe object from the craftingTemplate array
-    const recipe = this.slotAreas.recipeTemplate[0];
-    const recipeName = recipe.content.name;
-    let newItem;
-
-    // looping thru Recipe object to collect ore names into an array
-    const arrayWithOresFromRecipe = [];
-
-    for (let i = 0; i < recipe.content.oreInfo.length; i++) {
-      if (recipe.content.oreInfo[i].isFilled === true) {
-        arrayWithOresFromRecipe.push(recipe.content.oreInfo[i].content.name);
-      }
-    }
-
-    // looping thru the ores in the forge zone to collect ore names into an array
-    const arrayWithOresFromForgeSlots = [];
-    const arrayFromForge = this.slotAreas.forge;
-    for (let i = 0; i < arrayFromForge.length; i++) {
-      if (arrayFromForge[i].isFilled === true) {
-        arrayWithOresFromForgeSlots.push(arrayFromForge[i].content.name);
-      }
-    }
-
-    // compare the two above arrays
-    // if their length is different OR ores are different, print an error and leave the function
-    if (arrayWithOresFromRecipe.length !== arrayWithOresFromForgeSlots.length) {
-      this.emitter.emit('onWrongIngredients');
-    } else if (
-      JSON.stringify(arrayWithOresFromRecipe.sort()) !==
-      JSON.stringify(arrayWithOresFromForgeSlots.sort())
-    ) {
-      this.emitter.emit('onWrongIngredients');
-    } else {
-      newItem = new Item(recipeName, recipe.content.oreInfo);
-    }
-    return newItem;
+  forgeItem(name, ores) {
+    return new Item(name, ores);
   }
 }

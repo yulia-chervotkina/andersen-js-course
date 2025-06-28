@@ -1,6 +1,6 @@
 export default class Ore {
-  constructor(name, weight) {
+  constructor(name) {
     this.name = name;
-    this.weight = weight;
+    this.type = 'ore';
   }
 }

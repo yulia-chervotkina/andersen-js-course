@@ -1,11 +1,11 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-alert */
+import { EVENT_TYPES } from './EventEmitter';
+
 const dropPermissionMap = {
   ore: ['trash', 'inventory', 'craft-slots', 'create-new-recipe'],
   recipe: ['trash', 'recipe-template'],
   item: ['trash', 'inventory', 'craft-slots', 'create-new-recipe'],
 };
+
 export default class View {
   constructor(emitter) {
     this.emitter = emitter;
@@ -27,8 +27,7 @@ export default class View {
       recipeTemplate: this.recipeTemplate,
     };
 
-    this.emitter.on('slotsCreated', this.displaySlots.bind(this));
-    this.emitter.on('onWrongIngredients', this.showWrongIngredientsMessage.bind(this));
+    this.emitter.on(EVENT_TYPES.SLOTS_CREATED, slots => this.displaySlots(slots));
 
     this.mineButton = document.getElementById('mine-button');
     this.inventorySlotDiv = document.querySelectorAll('.ore');
@@ -53,20 +52,22 @@ export default class View {
     this.addNewRecipeButton.addEventListener('click', () => {
       this.newRecipeContainer.style.display = 'block';
       this.recipeContainer.replaceWith(this.newRecipeContainer);
+      this.emitter.emit(EVENT_TYPES.CLICK_ADD);
     });
     this.cancelButton.addEventListener('click', () => {
-      this.emitter.emit('click:cancel');
+      this.emitter.emit(EVENT_TYPES.CLICK_CANCEL);
       this.newRecipeContainer.replaceWith(this.recipeContainer);
     });
     this.createNewRecipeButton.addEventListener('click', () => this.saveNewRecipeInfo());
+
     this.mineButton.addEventListener('click', () => {
-      this.emitter.emit('click:mine');
+      this.emitter.emit(EVENT_TYPES.CLICK_MINE);
     });
     this.forgeButton.addEventListener('click', () => {
-      this.emitter.emit('click:forge');
+      this.emitter.emit(EVENT_TYPES.CLICK_FORGE);
     });
 
-    this.manageDrop();
+    this.addEventListenerOnDrop();
   }
 
   displaySlots({ areaName, slots }) {
@@ -128,58 +129,86 @@ export default class View {
     alert("Oops.. It seems you're using wrong ingredients");
   }
 
-  manageDrop() {
-    const dropZone = document.getElementsByClassName('dropzone');
+  // DRAG AND DROP BEGINS //
 
-    for (let i = 0; i < dropZone.length; i++) {
-      const dropZoneID = dropZone[i].getAttribute('id');
-      dropZone[i].addEventListener('dragover', event => {
+  addEventListenerOnDrop() {
+    const dropZone = Array.from(document.getElementsByClassName('dropzone'));
+
+    dropZone.forEach(zone => {
+      const dropZoneID = zone.getAttribute('id');
+      zone.addEventListener('dragover', event => event.preventDefault());
+      zone.addEventListener('drop', event => {
         event.preventDefault();
+        this.handleDrop(event, dropZoneID);
       });
+    });
+  }
 
-      dropZone[i].addEventListener('drop', event => {
-        event.preventDefault();
+  getDragData(event) {
+    const dataID = event.dataTransfer.getData('text/plain');
+    const [type, id] = dataID.split('-');
+    const dragged = document.querySelector(`[data-uid="${dataID}"]`);
 
-        const dataID = event.dataTransfer.getData('text/plain');
-        const [type, id] = dataID.split('-');
-        const dragged = document.querySelector(`[data-uid="${dataID}"]`);
+    return {
+      type,
+      id,
+      dragged,
+    };
+  }
 
-        const draggedType = type;
-        event.dataTransfer.getData('type');
-        const allowedZones = dropPermissionMap[draggedType];
-        switch (dropZoneID) {
-          case 'trash':
-            dragged.remove();
-            if (draggedType === 'ore') {
-              this.emitter.emit('drop:trash', 'inventory', id);
-            } else if (draggedType === 'recipe') {
-              this.emitter.emit('drop:trash', 'recipe', id);
-            }
-            break;
-          case 'create-new-recipe':
-            if (allowedZones.includes(dropZoneID) && event.target.className === 'ore')
-              event.target.appendChild(dragged);
-            this.emitter.emit('drop:newRecipe', id);
-            break;
-          case 'craft-slots':
-            if (allowedZones.includes(dropZoneID) && event.target.className === 'ore')
-              event.target.appendChild(dragged);
-            this.emitter.emit('drop:craftingSlots', id);
-            break;
-          case 'recipe-template':
-            if (allowedZones.includes(dropZoneID) && event.target.id === 'recipe-template') {
-              const recipeClone = dragged.cloneNode(true);
-              recipeClone.classList.remove('dragging');
-              // recipeClone.classList.add('craft-zone-recipe');
-              event.target.appendChild(recipeClone);
-              this.emitter.emit('drop:craftingTemplate', id);
-            }
-            break;
-          default: // do nothing
-        }
-      });
+  handleDrop(event, dropZoneID) {
+    const { type, id, dragged } = this.getDragData(event);
+    const allowedZones = dropPermissionMap[type];
+
+    switch (dropZoneID) {
+      case 'trash':
+        this.handleTrashDrop(dragged, type, id);
+        break;
+      case 'create-new-recipe':
+        if (allowedZones.includes(dropZoneID) && event.target.className === 'ore')
+          this.handleNewRecipeDrop(event, dragged, id);
+        break;
+      case 'craft-slots':
+        if (allowedZones.includes(dropZoneID) && event.target.className === 'ore')
+          this.handleCraftingSlotsDrop(event, dragged, id);
+        break;
+      case 'recipe-template':
+        if (allowedZones.includes(dropZoneID) && event.target.id === 'recipe-template')
+          this.handleRecipeTemplateDrop(event, dragged, id);
+        break;
+      default:
     }
   }
+
+  handleTrashDrop(dragged, type, id) {
+    dragged.remove();
+    if (type === 'ore') {
+      this.emitter.emit(EVENT_TYPES.DROP_TO_TRASH, 'inventory', id);
+    } else if (type === 'recipe') {
+      this.emitter.emit(EVENT_TYPES.DROP_TO_TRASH, 'recipe', id);
+    }
+  }
+
+  handleNewRecipeDrop(event, dragged, id) {
+    event.target.appendChild(dragged);
+    this.emitter.emit(EVENT_TYPES.DROP_TO_NEW_RECIPE, id);
+  }
+
+  handleCraftingSlotsDrop(event, dragged, id) {
+    event.target.appendChild(dragged);
+    this.emitter.emit(EVENT_TYPES.DROP_TO_CRAFTING_SLOTS, id);
+  }
+
+  handleRecipeTemplateDrop(event, dragged, id) {
+    const recipeClone = dragged.cloneNode(true);
+    recipeClone.classList.remove('dragging');
+    recipeClone.style.height = '150px';
+    recipeClone.style.width = '150px';
+    event.target.appendChild(recipeClone);
+    this.emitter.emit(EVENT_TYPES.DROP_TO_CRAFTING_TEMPLATE, id);
+  }
+
+  // DRAG AND DROP ENDS //
 
   saveNewRecipeInfo() {
     const nameInput = this.recipeNameElement.value;
@@ -187,7 +216,7 @@ export default class View {
       this.noRecipeNameError();
       return;
     }
-    this.emitter.emit('click:create', nameInput);
+    this.emitter.emit(EVENT_TYPES.CLICK_CREATE, nameInput);
     this.clearNewRecipeSlots();
   }
 

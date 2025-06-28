@@ -1,3 +1,18 @@
+export const EVENT_TYPES = {
+  CLICK_ADD: 'click-add',
+  CLICK_MINE: 'click-mine',
+  CLICK_CREATE: 'click-create-new-recipe',
+  CLICK_CANCEL: 'click-cancel',
+  CLICK_FORGE: 'click-forge',
+  DROP_TO_TRASH: 'drop-to-trash',
+  DROP_TO_NEW_RECIPE: 'drop-to-new-recipe',
+  DROP_TO_CRAFTING_SLOTS: 'drop-to-crafting-slots',
+  DROP_TO_CRAFTING_TEMPLATE: 'drop-to-crafting-template',
+  SLOTS_CREATED: 'slots-created',
+  WRONG_INGREDIENTS: 'wrong-ingredients',
+  INVENTORY_LOADED: 'inventory-loaded',
+};
+
 export default class EventEmitter {
   constructor() {
     this.events = {};
@@ -5,7 +20,6 @@ export default class EventEmitter {
 
   on(eventID, cb) {
     if (!Array.isArray(this.events[eventID])) this.events[eventID] = [];
-    // if (!this.events[eventID].includes(cb))
     this.events[eventID].push(cb);
   }
 
