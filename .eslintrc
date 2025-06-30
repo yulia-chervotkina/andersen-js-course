@@ -9,7 +9,8 @@
     "prettier/prettier": ["error"],
     "no-param-reassign": ["error", { "props": false }],
     "no-plusplus": "off",
-    "class-methods-use-this":"off",
-    "no-alert":"off"
+    "class-methods-use-this": "off",
+    "no-alert": "off",
+    "no-return-assign": "off"
   }
 }

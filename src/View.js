@@ -27,7 +27,7 @@ export default class View {
       recipeTemplate: this.recipeTemplate,
     };
 
-    this.emitter.on(EVENT_TYPES.SLOTS_CREATED, slots => this.displaySlots(slots));
+    this.emitter.on(EVENT_TYPES.SLOTS_CREATED, this.displaySlots);
 
     this.mineButton = document.getElementById('mine-button');
     this.inventorySlotDiv = document.querySelectorAll('.ore');
@@ -43,12 +43,8 @@ export default class View {
     this.forgeButton = document.getElementById('forge');
     this.recipeNameElement = document.getElementById('recipe-name');
 
-    this.infoButton.addEventListener('click', () => {
-      this.modal.style.display = 'block';
-    });
-    this.closeButton.addEventListener('click', () => {
-      this.modal.style.display = 'none';
-    });
+    this.infoButton.addEventListener('click', () => (this.modal.style.display = 'block'));
+    this.closeButton.addEventListener('click', () => (this.modal.style.display = 'none'));
     this.addNewRecipeButton.addEventListener('click', () => {
       this.newRecipeContainer.style.display = 'block';
       this.recipeContainer.replaceWith(this.newRecipeContainer);
@@ -58,19 +54,15 @@ export default class View {
       this.emitter.emit(EVENT_TYPES.CLICK_CANCEL);
       this.newRecipeContainer.replaceWith(this.recipeContainer);
     });
-    this.createNewRecipeButton.addEventListener('click', () => this.saveNewRecipeInfo());
+    this.createNewRecipeButton.addEventListener('click', this.saveNewRecipeInfo);
 
-    this.mineButton.addEventListener('click', () => {
-      this.emitter.emit(EVENT_TYPES.CLICK_MINE);
-    });
-    this.forgeButton.addEventListener('click', () => {
-      this.emitter.emit(EVENT_TYPES.CLICK_FORGE);
-    });
+    this.mineButton.addEventListener('click', () => this.emitter.emit(EVENT_TYPES.CLICK_MINE));
+    this.forgeButton.addEventListener('click', () => this.emitter.emit(EVENT_TYPES.CLICK_FORGE));
 
     this.addEventListenerOnDrop();
   }
 
-  displaySlots({ areaName, slots }) {
+  displaySlots = ({ areaName, slots }) => {
     const container = this.slotContainers[areaName];
     if (!container) return;
 
@@ -88,9 +80,9 @@ export default class View {
         container.appendChild(slotDiv);
       });
     }
-  }
+  };
 
-  displayOre(ore, index) {
+  displayOre = (ore, index) => {
     const oreButton = document.createElement('button');
     const oreDiv = this.inventoryContainer.querySelector(`[data-index="${index}"]`);
 
@@ -115,23 +107,23 @@ export default class View {
     oreButton.addEventListener('dragend', event => {
       event.target.classList.remove('dragging');
     });
-  }
+  };
 
-  showInventoryFullMessage() {
+  showInventoryFullMessage = () => {
     alert('Your inventory is full!');
-  }
+  };
 
-  noRecipeNameError() {
+  noRecipeNameError = () => {
     alert('Your recipe has to have a name');
-  }
+  };
 
-  showWrongIngredientsMessage() {
+  showWrongIngredientsMessage = () => {
     alert("Oops.. It seems you're using wrong ingredients");
-  }
+  };
 
   // DRAG AND DROP BEGINS //
 
-  addEventListenerOnDrop() {
+  addEventListenerOnDrop = () => {
     const dropZone = Array.from(document.getElementsByClassName('dropzone'));
 
     dropZone.forEach(zone => {
@@ -142,9 +134,9 @@ export default class View {
         this.handleDrop(event, dropZoneID);
       });
     });
-  }
+  };
 
-  getDragData(event) {
+  getDragData = event => {
     const dataID = event.dataTransfer.getData('text/plain');
     const [type, id] = dataID.split('-');
     const dragged = document.querySelector(`[data-uid="${dataID}"]`);
@@ -154,9 +146,9 @@ export default class View {
       id,
       dragged,
     };
-  }
+  };
 
-  handleDrop(event, dropZoneID) {
+  handleDrop = (event, dropZoneID) => {
     const { type, id, dragged } = this.getDragData(event);
     const allowedZones = dropPermissionMap[type];
 
@@ -178,39 +170,39 @@ export default class View {
         break;
       default:
     }
-  }
+  };
 
-  handleTrashDrop(dragged, type, id) {
+  handleTrashDrop = (dragged, type, id) => {
     dragged.remove();
-    if (type === 'ore') {
+    if (type === 'ore' || type === 'item') {
       this.emitter.emit(EVENT_TYPES.DROP_TO_TRASH, 'inventory', id);
     } else if (type === 'recipe') {
       this.emitter.emit(EVENT_TYPES.DROP_TO_TRASH, 'recipe', id);
     }
-  }
+  };
 
-  handleNewRecipeDrop(event, dragged, id) {
+  handleNewRecipeDrop = (event, dragged, id) => {
     event.target.appendChild(dragged);
     this.emitter.emit(EVENT_TYPES.DROP_TO_NEW_RECIPE, id);
-  }
+  };
 
-  handleCraftingSlotsDrop(event, dragged, id) {
+  handleCraftingSlotsDrop = (event, dragged, id) => {
     event.target.appendChild(dragged);
     this.emitter.emit(EVENT_TYPES.DROP_TO_CRAFTING_SLOTS, id);
-  }
+  };
 
-  handleRecipeTemplateDrop(event, dragged, id) {
+  handleRecipeTemplateDrop = (event, dragged, id) => {
     const recipeClone = dragged.cloneNode(true);
     recipeClone.classList.remove('dragging');
     recipeClone.style.height = '150px';
     recipeClone.style.width = '150px';
     event.target.appendChild(recipeClone);
     this.emitter.emit(EVENT_TYPES.DROP_TO_CRAFTING_TEMPLATE, id);
-  }
+  };
 
   // DRAG AND DROP ENDS //
 
-  saveNewRecipeInfo() {
+  saveNewRecipeInfo = () => {
     const nameInput = this.recipeNameElement.value;
     if (nameInput === '') {
       this.noRecipeNameError();
@@ -218,9 +210,9 @@ export default class View {
     }
     this.emitter.emit(EVENT_TYPES.CLICK_CREATE, nameInput);
     this.clearNewRecipeSlots();
-  }
+  };
 
-  displayRecipe(recipe, index) {
+  displayRecipe = (recipe, index) => {
     const recipeButton = document.createElement('button');
     const recipeDiv = this.recipeSlots.querySelector(`[data-index="${index}"]`);
 
@@ -248,18 +240,18 @@ export default class View {
     recipeButton.addEventListener('dragend', event => {
       event.target.classList.remove('dragging');
     });
-  }
+  };
 
-  clearNewRecipeSlots() {
+  clearNewRecipeSlots = () => {
     this.recipeNameElement.value = '';
     const newRecipeSlots = this.slotContainers.newRecipe.querySelectorAll('.ore');
 
     newRecipeSlots.forEach(slot => {
       slot.innerHTML = '';
     });
-  }
+  };
 
-  displayItem(newItem, index) {
+  displayItem = (newItem, index) => {
     this.recipeTemplate.innerHTML = '';
 
     const itemButton = document.createElement('button');
@@ -282,13 +274,13 @@ export default class View {
       event.target.classList.remove('dragging');
     });
     this.clearCraftingContainer();
-  }
+  };
 
-  clearCraftingContainer() {
+  clearCraftingContainer = () => {
     const newItemSlots = this.slotContainers.forge.querySelectorAll('.ore');
 
     newItemSlots.forEach(slot => {
       slot.innerHTML = '';
     });
-  }
+  };
 }

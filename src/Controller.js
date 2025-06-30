@@ -1,13 +1,23 @@
 import Ore from './Ore';
+import Item from './Item';
 import { EVENT_TYPES } from './EventEmitter';
 
+const ORE_TYPES = {
+  gold: 'gold',
+  silver: 'silver',
+  copper: 'copper',
+  brass: 'brass',
+  nickel: 'nickel',
+  iron: 'iron',
+};
+
 const ORE_TO_WEIGHT_MAP = {
-  gold: 1,
-  silver: 2,
-  copper: 3,
-  brass: 4,
-  nickel: 5,
-  iron: 6,
+  [ORE_TYPES.gold]: 1,
+  [ORE_TYPES.silver]: 2,
+  [ORE_TYPES.copper]: 3,
+  [ORE_TYPES.brass]: 4,
+  [ORE_TYPES.nickel]: 5,
+  [ORE_TYPES.iron]: 6,
 };
 
 export default class Controller {
@@ -15,34 +25,24 @@ export default class Controller {
     this.model = model;
     this.view = view;
     this.emitter = emitter;
-    this.oresCollection = [
-      new Ore('gold'),
-      new Ore('silver'),
-      new Ore('copper'),
-      new Ore('brass'),
-      new Ore('nickel'),
-      new Ore('iron'),
-    ];
 
-    this.emitter.on(EVENT_TYPES.CLICK_MINE, () => this.mine());
-    this.emitter.on(EVENT_TYPES.CLICK_CREATE, nameInput => this.create(nameInput));
-    this.emitter.on(EVENT_TYPES.CLICK_CANCEL, () => this.cancel());
-    this.emitter.on(EVENT_TYPES.CLICK_FORGE, () => this.forgeNewItem());
-    this.emitter.on(EVENT_TYPES.DROP_TO_TRASH, (areaName, id) =>
-      this.onDropToTrashZone(areaName, id)
-    );
-    this.emitter.on(EVENT_TYPES.DROP_TO_NEW_RECIPE, id => this.onDropToNewRecipe(id));
-    this.emitter.on(EVENT_TYPES.DROP_TO_CRAFTING_SLOTS, id => this.onDropToCraftingSlots(id));
-    this.emitter.on(EVENT_TYPES.DROP_TO_CRAFTING_TEMPLATE, id => this.onDropToCraftingTemplate(id));
+    this.emitter.on(EVENT_TYPES.CLICK_MINE, this.mine);
+    this.emitter.on(EVENT_TYPES.CLICK_CREATE, this.create);
+    this.emitter.on(EVENT_TYPES.CLICK_CANCEL, this.cancel);
+    this.emitter.on(EVENT_TYPES.CLICK_FORGE, this.forge);
+    this.emitter.on(EVENT_TYPES.DROP_TO_TRASH, this.onDropToTrashZone);
+    this.emitter.on(EVENT_TYPES.DROP_TO_NEW_RECIPE, this.onDropToNewRecipe);
+    this.emitter.on(EVENT_TYPES.DROP_TO_CRAFTING_SLOTS, this.onDropToCraftingSlots);
+    this.emitter.on(EVENT_TYPES.DROP_TO_CRAFTING_TEMPLATE, this.onDropToCraftingTemplate);
   }
 
-  init() {
+  init = () => {
     this.initInventrory();
     this.initRecipe();
     this.model.init();
-  }
+  };
 
-  initInventrory() {
+  initInventrory = () => {
     const loadedSlots = this.model.loadInventoryData();
     this.view.displaySlots({ areaName: 'inventory', slots: loadedSlots });
     loadedSlots.forEach((slot, index) => {
@@ -51,30 +51,32 @@ export default class Controller {
         if (slot.content.type === 'item') this.view.displayItem(slot.content, index);
       }
     });
-  }
+  };
 
-  initRecipe() {
+  initRecipe = () => {
     const loadedSlots = this.model.loadRecipeData();
     this.view.displaySlots({ areaName: 'recipe', slots: loadedSlots });
     loadedSlots.forEach((slot, index) => {
       if (slot.isFilled && slot.content) this.view.displayRecipe(slot.content, index);
     });
-  }
+  };
 
-  getRandomOre() {
-    const totalWeight = this.oresCollection.reduce(
-      (sum, ore) => sum + ORE_TO_WEIGHT_MAP[ore.name],
+  getRandomOre = () => {
+    const totalWeight = Object.values(ORE_TYPES).reduce(
+      (sum, ore) => sum + ORE_TO_WEIGHT_MAP[ore],
       0
     );
     let randomNum = Math.random() * totalWeight;
 
-    return this.oresCollection.find(ore => {
-      randomNum -= ORE_TO_WEIGHT_MAP[ore.name];
+    const oreType = Object.values(ORE_TYPES).find(ore => {
+      randomNum -= ORE_TO_WEIGHT_MAP[ore];
       return randomNum <= 0;
     });
-  }
 
-  mine() {
+    return new Ore(oreType);
+  };
+
+  mine = () => {
     const index = this.model.findFirstEmptySlotIndex('inventory');
 
     if (index === -1) {
@@ -86,15 +88,15 @@ export default class Controller {
     this.model.updateSlotInfo('inventory', newOre, index);
     this.view.displayOre(newOre, index);
     this.model.saveInventoryData();
-  }
+  };
 
-  onDropToTrashZone(areaName, index) {
+  onDropToTrashZone = (areaName, index) => {
     this.model.clearSlot(areaName, index);
     this.model.saveInventoryData();
     this.model.saveRecipeData();
-  }
+  };
 
-  onDropToNewRecipe(inventoryIndex) {
+  onDropToNewRecipe = inventoryIndex => {
     const ore = this.model.getElementFromContainer('inventory', inventoryIndex);
     const index = this.model.findFirstEmptySlotIndex('newRecipe');
     if (index !== -1) {
@@ -102,9 +104,9 @@ export default class Controller {
       this.model.clearSlot('inventory', inventoryIndex);
       this.model.saveInventoryData();
     }
-  }
+  };
 
-  create(nameInput) {
+  create = nameInput => {
     const newRecipe = this.model.createRecipe(nameInput);
     const index = this.model.findFirstEmptySlotIndex('recipe');
 
@@ -116,46 +118,34 @@ export default class Controller {
     this.model.updateSlotInfo('recipe', newRecipe, index);
     this.view.displayRecipe(newRecipe, index);
     this.model.saveRecipeData();
-  }
+  };
 
-  cancel() {
+  cancel = () => {
     this.view.clearNewRecipeSlots();
-  }
+  };
 
-  onDropToCraftingSlots(inventoryIndex) {
+  onDropToCraftingSlots = inventoryIndex => {
     const ore = this.model.getElementFromContainer('inventory', inventoryIndex);
     const index = this.model.findFirstEmptySlotIndex('forge');
     if (index !== -1) {
       this.model.updateSlotInfo('forge', ore, index);
       this.model.clearSlot('inventory', inventoryIndex);
     }
-  }
+  };
 
-  onDropToCraftingTemplate(index) {
+  onDropToCraftingTemplate = index => {
     const recipe = this.model.getElementFromContainer('recipe', index);
     this.model.updateSlotInfo('recipeTemplate', recipe, 0);
-  }
+  };
 
-  forgeNewItem() {
-    const recipe = this.model.slotAreas.recipeTemplate[0];
-    const recipeName = recipe.content.name;
-
-    const arrayWithOresFromRecipe = [];
-
-    for (let i = 0; i < recipe.content.oreInfo.length; i++) {
-      if (recipe.content.oreInfo[i].isFilled === true) {
-        arrayWithOresFromRecipe.push(recipe.content.oreInfo[i].content.name);
-      }
-    }
-
-    const arrayWithOresFromForgeSlots = [];
-
-    const arrayFromForge = this.model.getSlots('forge');
-    for (let i = 0; i < arrayFromForge.length; i++) {
-      if (arrayFromForge[i].isFilled === true) {
-        arrayWithOresFromForgeSlots.push(arrayFromForge[i].content.name);
-      }
-    }
+  forge = () => {
+    const targetArray = this.model.getInfoForItem();
+    const [
+      recipeName,
+      recipeIngredients,
+      arrayWithOresFromRecipe,
+      arrayWithOresFromForgeSlots,
+    ] = targetArray;
 
     if (
       arrayWithOresFromRecipe.length !== arrayWithOresFromForgeSlots.length ||
@@ -166,11 +156,11 @@ export default class Controller {
       return;
     }
 
-    const newItem = this.model.forgeItem(recipeName, recipe.content.oreInfo);
-    this.forge(newItem);
-  }
+    const newItem = new Item(recipeName, recipeIngredients);
+    this.displayCreatedItem(newItem);
+  };
 
-  forge(newItem) {
+  displayCreatedItem = newItem => {
     const index = this.model.findFirstEmptySlotIndex('inventory');
 
     if (!newItem) return;
@@ -183,5 +173,5 @@ export default class Controller {
     this.view.displayItem(newItem, index);
     this.model.saveInventoryData();
     this.model.clearAllSlotsInContainer('forge');
-  }
+  };
 }

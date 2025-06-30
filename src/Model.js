@@ -9,24 +9,24 @@ export default class Model {
     this.emitter = emitter;
     this.slotAreas = {};
 
-    this.emitter.on(EVENT_TYPES.CLICK_ADD, () => this.clearAllSlotsInContainer('newRecipe'));
+    this.emitter.on(EVENT_TYPES.CLICK_ADD, this.clearAllSlotsInContainer);
   }
 
-  init() {
+  init = () => {
     this.initSlots('forge', 8);
     this.initSlots('newRecipe', 8);
     this.initSlots('recipeTemplate', 1);
-  }
+  };
 
-  saveInventoryData() {
+  saveInventoryData = () => {
     localStorage.setItem('inventory', JSON.stringify(this.slotAreas.inventory));
-  }
+  };
 
-  saveRecipeData() {
+  saveRecipeData = () => {
     localStorage.setItem('recipe', JSON.stringify(this.slotAreas.recipe));
-  }
+  };
 
-  loadInventoryData() {
+  loadInventoryData = () => {
     const savedArray = localStorage.getItem('inventory');
     if (!savedArray) {
       this.initSlots('inventory', 20);
@@ -45,9 +45,9 @@ export default class Model {
     });
     this.slotAreas.inventory = unpackedArray;
     return unpackedArray;
-  }
+  };
 
-  loadRecipeData() {
+  loadRecipeData = () => {
     const savedArray = localStorage.getItem('recipe');
     if (!savedArray) {
       this.initSlots('recipe', 23);
@@ -64,35 +64,35 @@ export default class Model {
     });
     this.slotAreas.recipe = unpackedArray;
     return unpackedArray;
-  }
+  };
 
-  createSlots(count) {
+  createSlots = count => {
     const slots = [];
     for (let i = 0; i < count; i++) {
       slots.push(new Slot(false));
     }
     return slots;
-  }
+  };
 
-  initSlots(areaName, count) {
+  initSlots = (areaName, count) => {
     const slots = this.createSlots(count);
     this.slotAreas[areaName] = slots;
     this.emitter.emit(EVENT_TYPES.SLOTS_CREATED, { areaName, slots });
-  }
+  };
 
-  findFirstEmptySlotIndex(areaName) {
+  findFirstEmptySlotIndex = areaName => {
     const area = this.getSlots(areaName);
     return area.findIndex(slot => !slot.isFilled);
-  }
+  };
 
-  getSlots(container) {
+  getSlots = container => {
     return this.slotAreas[container] || [];
-  }
+  };
 
-  getElementFromContainer(areaName, index) {
+  getElementFromContainer = (areaName, index) => {
     const area = this.getSlots(areaName);
     return area[index].content;
-  }
+  };
 
   clearSlot(areaName, index) {
     const targetArea = this.getSlots(areaName);
@@ -100,20 +100,20 @@ export default class Model {
     targetArea[index].isFilled = false;
   }
 
-  clearAllSlotsInContainer(container) {
+  clearAllSlotsInContainer = container => {
     const targetArea = this.getSlots(container);
     for (let i = 0; i < targetArea.length; i++) {
       targetArea[i].content = null;
       targetArea[i].isFilled = false;
     }
-  }
+  };
 
-  updateSlotInfo(areaName, data, index) {
+  updateSlotInfo = (areaName, data, index) => {
     const targetArea = this.getSlots(areaName);
     if (data === undefined) targetArea[index].content = null;
     targetArea[index].content = data;
     targetArea[index].isFilled = true;
-  }
+  };
 
   createRecipe(nameInput) {
     const targetArray = this.slotAreas.newRecipe;
@@ -122,7 +122,22 @@ export default class Model {
     return newRecipe;
   }
 
-  forgeItem(name, ores) {
-    return new Item(name, ores);
-  }
+  getInfoForItem = () => {
+    const recipe = this.slotAreas.recipeTemplate[0];
+    const recipeName = recipe.content.name;
+    const recipeIngredients = recipe.content.oreInfo;
+    const arrayWithOresFromRecipe = [];
+    recipe.content.oreInfo.forEach(e => {
+      if (e.isFilled === true) arrayWithOresFromRecipe.push(e.content.name);
+    });
+
+    const arrayWithOresFromForgeSlots = [];
+    const arrayFromForge = this.getSlots('forge');
+
+    arrayFromForge.forEach(e => {
+      if (e.isFilled === true) arrayWithOresFromForgeSlots.push(e.content.name);
+    });
+
+    return [recipeName, recipeIngredients, arrayWithOresFromRecipe, arrayWithOresFromForgeSlots];
+  };
 }
