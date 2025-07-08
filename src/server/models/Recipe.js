@@ -6,6 +6,7 @@ const recipe = new Schema({
   name: String,
   ingredients: String,
   instructions: String,
+  favorite: Boolean
 });
 
 const Recipe = mongoose.model('Recipe', recipe);
