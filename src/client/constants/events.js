@@ -6,3 +6,4 @@ export const CLICK_CANCEL = 'click-cancel';
 export const CLICK_RECIPE = 'click-recipe';
 export const CLICK_ADD_NEW_RECIPE = 'click-add-new-recipe';
 export const CLICK_FAVORITES = 'click-favorites';
+export const ON_RECIPE_INFO_GATHERED = 'on-recipe-info-gathered';

@@ -69,7 +69,7 @@ label {
 }
 
 #form-container {
-    /* display: none; */
+    display: none;
     position: fixed;
     bottom: 5.5em;
     justify-self: center;
@@ -182,4 +182,13 @@ hr {
     justify-content: center;
     justify-items: center;
     padding-bottom: 0.5em;
+}
+
+button.icon {
+    border: none;
+    background-color: transparent;
+}
+
+#favorite {
+    stroke: #92B4F4;
 }

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
@@ -6,9 +6,9 @@ const recipe = new Schema({
   name: String,
   ingredients: String,
   instructions: String,
-  favorite: Boolean
+  isFavorite: Boolean,
 });
 
 const Recipe = mongoose.model('Recipe', recipe);
 
-export default Recipe;
+module.exports = Recipe;

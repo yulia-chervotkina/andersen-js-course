@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/favicon.ico">
     <title>Document</title>
 </head>
 <body>
@@ -14,30 +13,32 @@
     </nav>
 
     <main>
+
         <div id="form-container">
             <h2>New Recipe</h2>
-            <form action="">
+            <form action="" method="post" id="form">
                 <div>
                     <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="What would you like to cook?" required>
+                    <input id="user-input-name" type="text" placeholder="What would you like to cook?" required>
                 </div>
 
                 <div>
                     <label for="ingredients">Ingredients</label>
-                    <textarea type="text" placeholder="What ingredients will you use?" rows="5"></textarea>
+                    <textarea id="user-input-ingredients" type="text" placeholder="What ingredients will you use?" rows="5" required></textarea>
                 </div>
 
                 <div>
                     <label for="instructions">Instructions</label>
-                    <textarea type="text" placeholder="Any instructions?" required rows="5"></textarea>
+                    <textarea id="user-input-instructions" type="text" placeholder="Any instructions?" rows="5" required></textarea>
                 </div>
 
                 <div id="form-buttons">
-                    <button id="submit">Submit</button>
-                    <button id="cancel">Cancel</button>
+                    <button id="submit" type="submit">Submit</button>
+                    <button id="cancel" type="button">Cancel</button>
                 </div>
             </form> 
         </div>
+
 
         <div class="recipe-cards-container">
             <article class="recipe-card">
@@ -48,103 +49,13 @@
             </div>
             <div class="recipe-instruction">
                 <div class="recipe-cart-label">Instructions:</div>
-                <p class="recipe-tex">Heat up a skillet</p>
+                <p class="recipe-text">Heat up a skillet</p>
             </div>
             <hr>
             <div class="recipe-card-footer">
-                <img class="icon" id="favorite" src="./assets/favorite.svg" alt="favorit button">
-                <img class="icon" id="edit" src="./assets/edit.svg" alt="edit button">
-                <img class="icon" id="close" src="./assets/close.svg" alt="close button">
-            </div>
-        </article>
-
-        <article class="recipe-card">
-            <div class="recipe-name">Lasagna</div>
-            <div class="recipe-ingredients">
-                <div class="recipe-cart-label">Ingredients:</div>
-                <p class="recipe-tex">Meat, pasta, prosciutto</p>
-            </div>
-            <div class="recipe-instruction">
-                <div class="recipe-cart-label">Instructions:</div>
-                <p class="recipe-tex">Heat up a skillet</p>
-            </div>
-            <hr>
-            <div class="recipe-card-footer">
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
-            </div>
-        </article>
-
-        <article class="recipe-card">
-            <div class="recipe-name">Lasagna</div>
-            <div class="recipe-ingredients">
-                <div class="recipe-cart-label">Ingredients:</div>
-                <p class="recipe-tex">Meat, pasta, prosciutto</p>
-            </div>
-            <div class="recipe-instruction">
-                <div class="recipe-cart-label">Instructions:</div>
-                <p class="recipe-tex">Heat up a skillet</p>
-            </div>
-            <hr>
-            <div class="recipe-card-footer">
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
-            </div>
-        </article>
-
-        <article class="recipe-card">
-            <div class="recipe-name">Lasagna</div>
-            <div class="recipe-ingredients">
-                <div class="recipe-cart-label">Ingredients:</div>
-                <p class="recipe-tex">Meat, pasta, prosciutto</p>
-            </div>
-            <div class="recipe-instruction">
-                <div class="recipe-cart-label">Instructions:</div>
-                <p class="recipe-tex">Heat up a skillet</p>
-            </div>
-            <hr>
-            <div class="recipe-card-footer">
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
-            </div>
-        </article>
-
-        <article class="recipe-card">
-            <div class="recipe-name">Lasagna</div>
-            <div class="recipe-ingredients">
-                <div class="recipe-cart-label">Ingredients:</div>
-                <p class="recipe-tex">Meat, pasta, prosciutto</p>
-            </div>
-            <div class="recipe-instruction">
-                <div class="recipe-cart-label">Instructions:</div>
-                <p class="recipe-tex">Heat up a skillet</p>
-            </div>
-            <hr>
-            <div class="recipe-card-footer">
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
-            </div>
-        </article>
-
-        <article class="recipe-card">
-            <div class="recipe-name">Lasagna</div>
-            <div class="recipe-ingredients">
-                <div class="recipe-cart-label">Ingredients:</div>
-                <p class="recipe-tex">Meat, pasta, prosciutto</p>
-            </div>
-            <div class="recipe-instruction">
-                <div class="recipe-cart-label">Instructions:</div>
-                <p class="recipe-tex">Heat up a skillet</p>
-            </div>
-            <hr>
-            <div class="recipe-card-footer">
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
+                <button class="icon"><img id="favorite" src="./assets/favorite.svg" alt="favorite button"></button>
+                <button class="icon" id="edit"><img src="./assets/edit.svg" alt="edit button"></button>
+                <button class="icon" id="close"><img src="./assets/close.svg" alt="close button"></button>  
             </div>
         </article>
         </div>
