@@ -33,6 +33,7 @@ export default class Controller {
       const response = await fetch('http://localhost:3000/api/recipes');
       if (response.ok) {
         const result = await response.json();
+        this.view.removeAllCards();
         result.forEach(e => {
           const { _id } = e;
           this.view.printRecipeCard(e, _id);
