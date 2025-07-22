@@ -53,10 +53,10 @@ export default class Controller {
       if (response.ok) {
         const result = await response.json();
         console.log(result);
-        // result.forEach(e => {
-        //   const { _id } = e;
-        //   this.view.printRecipeCard(e, _id);
-        // });
+        result.forEach(e => {
+          const { _id } = e;
+          this.view.printRecipeCard(e, _id);
+        });
         console.log('Успех:', result);
       } else {
         const errorData = await response.json();
