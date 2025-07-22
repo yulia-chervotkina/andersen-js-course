@@ -44,6 +44,12 @@ export default class View extends Emitter {
     const ingredients = this.userInputIngredients.value;
     const instructions = this.userInputInstructions.value;
 
+    if (name === '' || ingredients === '' || instructions === '') {
+      // TO-DO replace alert with styles
+      alert('All fields are required');
+      return;
+    }
+
     const recipe = {
       name,
       ingredients,
