@@ -9,68 +9,112 @@ export default class Controller {
     this.emitter.on(events.CLICK_FAVORITE, this.addToFavorites);
     this.emitter.on(events.CLICK_EDIT, this.editRecipe);
     this.emitter.on(events.CLICK_DELETE, this.delete);
+    this.emitter.on(events.CLICK_RECIPE, this.getAllRecipies);
+    this.emitter.on(events.CLICK_FAVORITES, this.getFavoriteRecipies);
   }
 
-  create = async recipe => {
-    console.log('hello from controller create');
+  init = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/recipes', {
+      const response = await fetch('http://localhost:3000/api/recipes');
+      if (response.ok) {
+        const result = await response.json();
+        result.forEach(e => {
+          const { _id } = e;
+          this.view.printRecipeCard(e, _id);
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getAllRecipies = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/recipes');
+      if (response.ok) {
+        const result = await response.json();
+        result.forEach(e => {
+          const { _id } = e;
+          this.view.printRecipeCard(e, _id);
+        });
+        console.log('Успех:', result);
+      } else {
+        const errorData = await response.json();
+        console.log('Ошибка:', response.status, errorData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getFavoriteRecipies = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/recipes/favorite');
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+        // result.forEach(e => {
+        //   const { _id } = e;
+        //   this.view.printRecipeCard(e, _id);
+        // });
+        console.log('Успех:', result);
+      } else {
+        const errorData = await response.json();
+        console.log('Ошибка:', response.status, errorData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  create = async jsonObject => {
+    try {
+      const response = await fetch('http://localhost:3000/api/recipes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: recipe,
+        body: jsonObject,
       });
 
       if (response.ok) {
         const result = await response.json();
-        console.log('Успех:', result);
-        this.reset();
-      } else {
-        const errorData = await response.json();
-        console.log('Ошибка:', response.status, errorData);
+        const { _id } = result;
+        const parsed = JSON.parse(jsonObject);
+        this.view.printRecipeCard(parsed, _id);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  addToFavorites = async recipe => {
+  addToFavorites = async id => {
     try {
-      // TO-DO correct address - need to pass some identifier of a recipe
-      const response = await fetch('http://localhost:3000/api/recipes', {
+      const response = await fetch(`http://localhost:3000/api/recipes/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: recipe({ isFavorite: true }),
+        body: JSON.stringify({ isFavorite: true }),
       });
 
       if (response.ok) {
         const result = await response.json();
         console.log('Успех:', result);
+        this.view.changeFavIconColor();
         this.reset();
-      } else {
-        const errorData = await response.json();
-        console.log('Ошибка:', response.status, errorData);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  editRecipe = async recipe => {
-    let recipeObject;
+  editRecipe = async id => {
+    console.log('hello form Controller editRecipe');
     try {
-      const response = await fetch('URL', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: recipe,
-      });
+      const response = await fetch(`http://localhost:3000/api/recipes/${id}`);
       if (response.ok) {
-        recipeObject = JSON.parse(response);
+        const recipeObject = JSON.parse(response);
         this.view.showEditRecipeModal(recipeObject);
       }
     } catch (error) {
@@ -78,19 +122,14 @@ export default class Controller {
     }
   };
 
-  delete = async recipe => {
+  delete = async id => {
     try {
-      const response = await fetch('URL', {
+      const response = await fetch(`http://localhost:3000/api/recipes/${id}`, {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: recipe,
+        body: { _id: id },
       });
       if (response.ok) {
-        const result = await response.json();
-        console.log('Успех:', result);
-        this.view.removeRecipeFromPage(recipe);
+        this.view.removeRecipeFromPage(id);
       }
     } catch (error) {
       console.log(error);

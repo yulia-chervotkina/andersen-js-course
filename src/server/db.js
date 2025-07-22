@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+// require('@dotenvx/dotenvx').config();
 
-dotenv.config(); // Load environment variables from .env file
-
-// require('dotenv').config();
+// const dotenv = require('dotenv');
+// dotenv.config(); // Load environment variables from .env file
+require('dotenv').config();
 
 const mongoURI = process.env.MONGO_URI;
 const connectDB = async () => {

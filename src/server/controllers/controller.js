@@ -4,11 +4,21 @@ const createRecipe = async (req, res) => {
   const recipe = new Recipe(req.body);
   try {
     const savedRecipe = await recipe.save();
+    // console.log('recipe created successfully');
     res.status(201).json(savedRecipe);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
+
+// const getRecipeByID = async (req, res) => {
+//   try {
+//     const recipe = await Recipe.findOne(req.body.id);
+//     res.status(201).json(recipe);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
 
 const getRecipies = async (req, res) => {
   try {
@@ -30,21 +40,31 @@ const getFavoriteRecipies = async (req, res) => {
 
 const updateRecipe = async (req, res) => {
   try {
-    const updatedRecipe = await Recipe.updateOne();
+    const { id } = req.params;
+    const updatedRecipe = await Recipe.findByIdAndUpdate(id, req.body, { new: true });
     res.status(200).json(updatedRecipe);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-// TO-DO GET AN ID
 const deleteRecipe = async (req, res) => {
   try {
-    await Recipe.deleteOne();
-    res.status(204).json({ message: 'Recipe deleted successfully' });
+    const { id } = req.params;
+    const result = await Recipe.findOneAndDelete({ _id: id });
+    if (result.deletedCount === 0) {
+      res.status(404).json({ message: 'Recipe not found' });
+    }
+    res.status(200).json({ message: 'Recipe deleted successfully' });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-module.export = { createRecipe, getRecipies, getFavoriteRecipies, updateRecipe, deleteRecipe };
+module.exports = {
+  createRecipe,
+  getRecipies,
+  getFavoriteRecipies,
+  updateRecipe,
+  deleteRecipe,
+};
