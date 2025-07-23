@@ -11,14 +11,15 @@ const createRecipe = async (req, res) => {
   }
 };
 
-// const getRecipeByID = async (req, res) => {
-//   try {
-//     const recipe = await Recipe.findOne(req.body.id);
-//     res.status(201).json(recipe);
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// };
+const getRecipeByID = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipe = await Recipe.findById(id);
+    res.status(201).json(recipe);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 const getRecipies = async (req, res) => {
   try {
@@ -40,7 +41,7 @@ const getFavoriteRecipies = async (req, res) => {
   }
 };
 
-const updateRecipe = async (req, res) => {
+const addRecipeToFavorite = async (req, res) => {
   try {
     const { id } = req.params;
     const updatedRecipe = await Recipe.findByIdAndUpdate(id, req.body, { new: true });
@@ -63,10 +64,22 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
+const updateRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedRecipe = await Recipe.findByIdAndUpdate(id, req.body, { new: true });
+    res.status(200).json(updatedRecipe);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 module.exports = {
+  getRecipeByID,
   createRecipe,
   getRecipies,
   getFavoriteRecipies,
   updateRecipe,
+  addRecipeToFavorite,
   deleteRecipe,
 };
