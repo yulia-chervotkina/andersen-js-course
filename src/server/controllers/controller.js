@@ -32,9 +32,8 @@ const getRecipies = async (req, res) => {
 
 const getFavoriteRecipies = async (req, res) => {
   try {
-    const favRecipies = await Recipe.find({
-      isFavorite: true,
-    });
+    const favRecipies = await Recipe.find({ isFavorite: true });
+    console.log(favRecipies);
     res.status(200).json(favRecipies);
   } catch (error) {
     res.status(400).json({ message: error.message });

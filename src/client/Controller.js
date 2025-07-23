@@ -38,8 +38,8 @@ export default class Controller {
         const result = await response.json();
         this.view.removeAllCards();
         result.forEach(e => {
-          const { _id } = e;
-          this.view.printRecipeCard(e, _id);
+          const { _id, isFavorite } = e;
+          this.view.printRecipeCard(e, _id, isFavorite);
         });
         console.log('Успех:', result);
       } else {
@@ -52,14 +52,23 @@ export default class Controller {
   };
 
   getFavoriteRecipies = async () => {
+    console.log('geting fav recipes ...');
+    const url = 'http://localhost:3000/api/recipes/favorite';
+    console.log('fetching url:', url);
     try {
-      const response = await fetch('http://localhost:3000/api/recipes/favorite');
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(response);
       if (response.ok) {
         const result = await response.json();
         console.log(result);
         result.forEach(e => {
-          const { _id } = e;
-          this.view.printRecipeCard(e, _id);
+          const { _id, isFavorite } = e;
+          this.view.printRecipeCard(e, _id, isFavorite);
         });
         console.log('Успех:', result);
       } else {
