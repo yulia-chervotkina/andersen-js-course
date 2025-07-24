@@ -4,7 +4,6 @@ const createRecipe = async (req, res) => {
   const recipe = new Recipe(req.body);
   try {
     const savedRecipe = await recipe.save();
-    // console.log('recipe created successfully');
     res.status(201).json(savedRecipe);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -15,7 +14,7 @@ const getRecipeByID = async (req, res) => {
   try {
     const { id } = req.params;
     const recipe = await Recipe.findById(id);
-    res.status(201).json(recipe);
+    res.status(200).json(recipe);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -33,7 +32,6 @@ const getRecipies = async (req, res) => {
 const getFavoriteRecipies = async (req, res) => {
   try {
     const favRecipies = await Recipe.find({ isFavorite: true });
-    console.log(favRecipies);
     res.status(200).json(favRecipies);
   } catch (error) {
     res.status(400).json({ message: error.message });
