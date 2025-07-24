@@ -17,25 +17,21 @@
 }
 
 #main {
-    margin: 2em 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center;
-    height: 100vh;
-    z-index: 0;
-    width: 95%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-content: space-evenly;
     justify-items: center;
+    margin: 2em 0;
+    height: 100%;
+    z-index: 0;
+    width: 100%;
 }
 
 nav {
     background-color: var(--nav-color);
     padding: 1em;
     height: 10%;
-    width: auto;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-content: space-evenly;
@@ -53,10 +49,6 @@ button {
 }
 
 button:hover {
-    transform: translateY(0.2em);
-}
-
-button:active {
     transform: translateY(0.2em);
 }
 
@@ -139,17 +131,7 @@ input {
 #cancel {
     background-color: var(--form-bg-color);
     box-shadow: 0 0 5px 2px var(--nav-color);
-    /* border: var(--text-color) solid 0.09rem; */
 }
-
-/* #recipe-cards-container {
-    z-index: 0;
-    width: 95%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: space-evenly;
-    justify-items: center;
-} */
 
 .recipe-card {
     height: fit-content;
@@ -168,7 +150,6 @@ input {
 }
 
 .recipe-cart-label {
-    /* font-size: 1.1em; */
     padding: 0.5em;
     font-weight: 600;
 }
@@ -201,6 +182,7 @@ button.icon {
     font-weight: normal;
     font-style: normal;
     font-size: 24px;
+    color: #666666;
     display: inline-block;
     line-height: 1;
     text-transform: none;
@@ -210,10 +192,26 @@ button.icon {
     direction: ltr;
 }
 
-#favorite {
-    color: var(--text-color);
-}
-
 .icon.clicked #favorite {
     color: var(--nav-color);
+}
+
+@media only screen and (max-width: 750px) {
+    #main {
+    grid-template-columns: repeat(2, 1fr);
+    }
+    #form-container {
+            top: 70px; 
+            width: 80%;
+        }
+}
+
+@media only screen and (max-width: 550px) {
+    #main {
+    grid-template-columns: repeat(1, 1fr);
+    }
+    #form-container {
+        top: 90px; 
+        width: 80%;
+    }
 }
