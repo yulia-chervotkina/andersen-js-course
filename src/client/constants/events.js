@@ -1,8 +1,8 @@
-export const CLICK_FAVORITE = 'click-favorite';
-export const CLICK_EDIT = 'click-edit';
-export const CLICK_DELETE = 'click-delete';
-export const CLICK_SUBMIT = 'click-submit';
-export const CLICK_RECIPE = 'click-recipe';
-export const CLICK_FAVORITES = 'click-favorites';
-export const CLICK_FAVORITE_TO_REMOVE = 'click-favorite-to-remove';
-export const ON_EDIT_MODE = 'on-edit-mode';
+export const ADD_TO_FAV = 'add-to-favorite';
+export const EDIT = 'edit';
+export const DELETE = 'delete';
+export const SUBMIT = 'submit';
+export const GET_MAIN_PAGE = 'get-main-page';
+export const GET_ALL_FAV_RECIPES = 'get-all-fav-recipes';
+export const REMOVE_FROM_FAV = 'remove-from-fav';
+export const UPDATE_RECIPE = 'on-edit-mode';

@@ -1,3 +1,4 @@
-export const rootURL = 'http://localhost:3000/api/recipes';
-export const favURL = 'http://localhost:3000/api/recipes/favorite';
-export const buildURL = id => `http://localhost:3000/api/recipes/${id}`;
+export const root = 'http://localhost:3000/api';
+export const recipes = `${root}/recipes`;
+export const fav = `${recipes}/favorite`;
+export const recipeByID = id => `${recipes}/${id}`;

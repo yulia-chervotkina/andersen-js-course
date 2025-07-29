@@ -1,108 +1,85 @@
 import * as events from './constants/events';
 import * as urls from './constants/urls';
+import fetchData from './utilities';
 
 export default class Controller {
   constructor(emitter, view) {
     this.emitter = emitter;
     this.view = view;
 
-    this.emitter.on(events.CLICK_FAVORITE, this.addToFavorites);
-    this.emitter.on(events.CLICK_EDIT, this.fetchRecipeByID);
-    this.emitter.on(events.CLICK_DELETE, this.delete);
-    this.emitter.on(events.CLICK_RECIPE, this.getAllRecipies);
-    this.emitter.on(events.CLICK_FAVORITES, this.getFavoriteRecipies);
-    this.emitter.on(events.ON_EDIT_MODE, this.sendEditedRecipe);
-    this.emitter.on(events.CLICK_SUBMIT, this.create);
-    this.emitter.on(events.CLICK_FAVORITE_TO_REMOVE, this.removeFromFavorite);
+    this.headers = {
+      'Content-Type': 'application/json',
+    };
+    this.emitter.on(events.ADD_TO_FAV, this.addToFavorites);
+    this.emitter.on(events.EDIT, this.fetchRecipeByID);
+    this.emitter.on(events.DELETE, this.delete);
+    this.emitter.on(events.GET_MAIN_PAGE, this.getAllRecipies);
+    this.emitter.on(events.GET_ALL_FAV_RECIPES, this.getFavoriteRecipies);
+    this.emitter.on(events.UPDATE_RECIPE, this.sendEditedRecipe);
+    this.emitter.on(events.SUBMIT, this.create);
+    this.emitter.on(events.REMOVE_FROM_FAV, this.removeFromFavorite);
   }
 
-  fetchData = async (url, method) => {
-    try {
-      const response = await fetch(url, method);
-      if (response.ok) {
-        const data = await response.json();
-        return data;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  init = async () => this.printRecipeCard(await this.fetchData(urls.rootURL));
+  init = () => fetchData(urls.recipes).then(data => this.printRecipeCard(data));
 
   getAllRecipies = async () => {
     this.view.removeAllCards();
-    this.printRecipeCard(await this.fetchData(urls.rootURL));
+    this.printRecipeCard(await fetchData(urls.recipes));
   };
 
-  getFavoriteRecipies = async () => this.printRecipeCard(await this.fetchData(urls.favURL));
+  getFavoriteRecipies = () => fetchData(urls.fav).then(this.printRecipeCard);
 
-  printRecipeCard = result => {
-    result.forEach(e => {
-      const { _id, isFavorite } = e;
-      this.view.printRecipeCard(e, _id, isFavorite);
-    });
-  };
+  printRecipeCard = result => result.forEach(e => this.view.printRecipeCard(e));
 
   create = async () => {
     const userRecipeData = this.view.getRecipeInfo();
     if (userRecipeData) {
-      const method = {
+      const options = {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.headers,
         body: JSON.stringify(userRecipeData),
       };
-      const data = await this.fetchData(urls.rootURL, method);
-      const { _id } = data;
-      this.view.printRecipeCard(userRecipeData, _id);
+      const data = await fetchData(urls.recipes, options);
+      this.view.printRecipeCard(data);
     }
   };
 
   addToFavorites = async id => {
-    const method = {
+    const options = {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: this.headers,
       body: JSON.stringify({ isFavorite: true }),
     };
-    await this.fetchData(urls.buildURL(id), method);
+    await fetchData(urls.recipeByID(id), options);
   };
 
   removeFromFavorite = async id => {
-    const method = {
+    const options = {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: this.headers,
       body: JSON.stringify({ isFavorite: false }),
     };
-    await this.fetchData(urls.buildURL(id), method);
+    await fetchData(urls.recipeByID(id), options);
   };
 
-  fetchRecipeByID = async id =>
-    this.view.showEditRecipeModal(await this.fetchData(urls.buildURL(id)));
+  fetchRecipeByID = id => fetchData(urls.recipeByID(id)).then(this.view.showEditRecipeModal);
 
   sendEditedRecipe = async (id, obj) => {
-    const method = {
+    const options = {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: this.headers,
       body: JSON.stringify(obj),
     };
-    this.view.printRecipeCard(await this.fetchData(urls.buildURL(id), method));
+    this.view.printRecipeCard(await fetchData(urls.recipeByID(id), options));
     this.view.removeRecipeFromPage(id);
   };
 
   delete = async id => {
-    const method = {
+    const options = {
       method: 'DELETE',
       body: { _id: id },
     };
-    await fetch(urls.buildURL(id), method);
+    await fetch(urls.recipeByID(id), options);
     this.view.removeRecipeFromPage(id);
   };
 }

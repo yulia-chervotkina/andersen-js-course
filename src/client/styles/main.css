@@ -192,7 +192,7 @@ button.icon {
     direction: ltr;
 }
 
-.icon.clicked #favorite {
+.icon.enabled #favorite {
     color: var(--nav-color);
 }
 

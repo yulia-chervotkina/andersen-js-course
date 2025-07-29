@@ -32,9 +32,10 @@ export default class View extends Emitter {
     if (this.addNewRecipeForm.hasAttribute('data-mode')) {
       const id = this.addNewRecipeForm.getAttribute('data-id');
       const data = this.getRecipeInfo();
-      this.emit(events.ON_EDIT_MODE, id, data);
+      this.emit(events.UPDATE_RECIPE, id, data);
       this.addNewRecipeForm.removeAttribute('data-id');
-    } else this.emit(events.CLICK_SUBMIT);
+      this.addNewRecipeForm.removeAttribute('data-mode');
+    } else this.emit(events.SUBMIT);
   };
 
   handleCloseButtonClick = () => {
@@ -42,9 +43,13 @@ export default class View extends Emitter {
     this.userInputIngredients.value = '';
     this.userInputInstructions.value = '';
     this.addNewRecipeForm.style.display = 'none';
+    if (this.addNewRecipeForm.hasAttribute('data-mode')) {
+      this.addNewRecipeForm.removeAttribute('data-id');
+      this.addNewRecipeForm.removeAttribute('data-mode');
+    }
   };
 
-  handleRecipeButtonClick = () => this.emit(events.CLICK_RECIPE);
+  handleRecipeButtonClick = () => this.emit(events.GET_MAIN_PAGE);
 
   handleAddNewRecipeButtonClick = () => {
     this.addNewRecipeForm.style.display = 'block';
@@ -52,7 +57,7 @@ export default class View extends Emitter {
 
   handleFavoritesButtonClick = () => {
     this.removeAllCards();
-    this.emit(events.CLICK_FAVORITES);
+    this.emit(events.GET_ALL_FAV_RECIPES);
   };
 
   getRecipeInfo = () => {
@@ -72,12 +77,12 @@ export default class View extends Emitter {
     };
   };
 
-  printRecipeCard = (data, id, isFavorite) => {
-    const { name, ingredients, instructions } = data;
+  printRecipeCard = data => {
+    const { _id, name, ingredients, instructions, isFavorite } = data;
 
     const recipeCard = document.createElement('article');
     recipeCard.classList.add('recipe-card');
-    recipeCard.dataset.id = id;
+    recipeCard.dataset.id = _id;
 
     const recipeName = document.createElement('div');
     recipeName.classList.add('recipe-name');
@@ -98,18 +103,9 @@ export default class View extends Emitter {
     const footer = document.createElement('div');
     footer.classList.add('recipe-card-footer');
 
-    this.appPage.appendChild(recipeCard);
-    recipeCard.append(
-      recipeName,
-      recipeIngredients,
-      recipeInstructions,
-      document.createElement('hr'),
-      footer
-    );
-
     const favButton = document.createElement('button');
     favButton.classList.add('fav', 'icon');
-    if (isFavorite) favButton.classList.add('clicked');
+    if (isFavorite) favButton.classList.add('enabled');
     favButton.innerHTML = `<span id="favorite" class="material-symbols-outlined">favorite</span>`;
 
     const editButton = document.createElement('button');
@@ -122,29 +118,37 @@ export default class View extends Emitter {
 
     favButton.addEventListener('click', () => {
       this.changefavButtonColor(favButton);
-      this.isFavorite(id);
+      this.isFavorite(_id);
     });
 
     editButton.addEventListener('click', () => {
-      this.emit(events.CLICK_EDIT, id);
+      this.emit(events.EDIT, _id);
     });
 
     deleteButton.addEventListener('click', () => {
-      this.emit(events.CLICK_DELETE, id);
+      this.emit(events.DELETE, _id);
     });
 
     footer.append(favButton, editButton, deleteButton);
+    recipeCard.append(
+      recipeName,
+      recipeIngredients,
+      recipeInstructions,
+      document.createElement('hr'),
+      footer
+    );
+    this.appPage.appendChild(recipeCard);
 
     this.handleCloseButtonClick();
   };
 
-  changefavButtonColor = favButton => favButton.classList.toggle('clicked');
+  changefavButtonColor = favButton => favButton.classList.toggle('enabled');
 
   isFavorite = id => {
     const targetCard = document.querySelector(`[data-id="${id}"]`);
     const targetIcon = targetCard.querySelector('.fav');
-    if (targetIcon.classList.contains('clicked')) this.emit(events.CLICK_FAVORITE, id);
-    else this.emit(events.CLICK_FAVORITE_TO_REMOVE, id);
+    if (targetIcon.classList.contains('enabled')) this.emit(events.ADD_TO_FAV, id);
+    else this.emit(events.REMOVE_FROM_FAV, id);
   };
 
   showEditRecipeModal = obj => {
@@ -157,7 +161,7 @@ export default class View extends Emitter {
     this.userInputInstructions.value = instructions;
   };
 
-  removeAllCards = () => document.querySelectorAll('.recipe-card').forEach(e => e.remove());
+  removeAllCards = () => this.appPage.replaceChildren();
 
   removeRecipeFromPage = id => document.querySelector(`[data-id="${id}"]`).remove();
 }
