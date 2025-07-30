@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=favorite" />   
+
+</head>
+<body>
+    <nav>
+            <button class="nav-button" id="recipe">RECIPE</button>
+            <button class="nav-button" id="add-new-recipe">ADD NEW RECIPE</button>
+            <button class="nav-button" id="favorites">FAVORITES</button>
+    </nav>
+
+    <main id="main">
+        <div id="form-container">
+            <h2>New Recipe</h2>
+            <form action="" method="post" id="form">
+                <div>
+                    <label for="user-input-name">Name</label>
+                    <input id="user-input-name" type="text" placeholder="What would you like to cook?" required>
+                </div>
+
+                <div>
+                    <label for="user-input-ingredients">Ingredients</label>
+                    <textarea id="user-input-ingredients" type="text" placeholder="What ingredients will you use?" rows="5" required></textarea>
+                </div>
+
+                <div>
+                    <label for="user-input-instructions">Instructions</label>
+                    <textarea id="user-input-instructions" type="text" placeholder="Any instructions?" rows="5" required></textarea>
+                </div>
+
+                <div id="form-buttons">
+                    <button id="submit" type="button">Submit</button>
+                    <button id="cancel" type="button">Cancel</button>
+                </div>
+            </form> 
+        </div>
+    </main>
+
+</body>
+</html>

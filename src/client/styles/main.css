@@ -1,0 +1,217 @@
+:root {
+    --nav-color: #92B4F4;
+    --accent-color: #FFFD98; 
+    --form-bg-color: #F7F0F0;
+    --font-family: "Roboto", sans-serif;
+    --font-size: 1rem;
+    --text-color: #3f3d3d;
+    background: radial-gradient(circle, rgba(146, 180, 244, 1) 0%, rgba(247, 240, 240, 1) 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+    color: var(--text-color);
+    font-size: var(--font-size);
+}
+
+#main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-evenly;
+    justify-items: center;
+    margin: 2em 0;
+    height: 100%;
+    z-index: 0;
+    width: 100%;
+}
+
+nav {
+    background-color: var(--nav-color);
+    padding: 1em;
+    height: 10%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-evenly;
+    justify-items: center;
+}
+
+.nav-button {
+    background-color: var(--nav-color);
+    border: none;
+    width: 9em;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    transform: translateY(0.2em);
+}
+
+form {
+    display: grid;
+    grid-template-rows: 1fr;
+    gap: 0.9em;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0.9em;
+}
+
+#form-container {
+    display: none;
+    position: fixed;
+    bottom: 5.5em;
+    justify-self: center;
+    z-index: 1;
+    padding: 1em;
+    background-color: var(--form-bg-color);
+    display: grid;
+    grid-template-rows: 1fr;
+    gap: 1rem;
+    border-radius: 0.4em;
+    box-shadow: 0 0 15px 2px var(--nav-color);
+    width: 50%;
+    height: fit-content;
+}
+
+input, textarea {
+    width: 95%;
+    padding: 0.45rem 0.8rem;
+    background-color: var(--form-bg-color);
+    border: 0.09rem solid var(--text-color);
+    border-radius: 0.4em;
+    font-size: 0.8rem;
+}
+
+input:focus, 
+textarea:focus {
+    border-color: var(--nav-color);
+    box-shadow: 0 0 5px 2px var(--nav-color);
+    outline: 1px solid transparent;
+}
+
+input {
+    height: 1.5em;
+}
+
+::placeholder {
+    color:#92B4F4;
+}
+
+#form-buttons {
+    display: grid;
+    grid-template-columns: 4.5em 4.5em;
+    justify-content: center;
+    gap: 1em;
+    width: 100%;
+}
+
+#submit, #cancel {
+   height: 2rem;
+   width: 4.5rem;
+   border: none;
+   border-radius: 0.4em;
+}
+
+#submit {
+    background-color: var(--nav-color);
+    box-shadow: 0 0 5px 2px var(--nav-color);
+}
+
+#cancel {
+    background-color: var(--form-bg-color);
+    box-shadow: 0 0 5px 2px var(--nav-color);
+}
+
+.recipe-card {
+    height: fit-content;
+    width: 75%;
+    box-shadow: 0 0 3px 2px var(--nav-color);
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-bottom: 2em;
+}
+
+.recipe-name {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 1em;
+}
+
+.recipe-cart-label {
+    padding: 0.5em;
+    font-weight: 600;
+}
+
+.recipe-text{
+    padding: 0.5em;
+}
+
+hr {
+    display: inline-block;
+    border: 1px solid var(--nav-color);
+    margin: 0.5em 0;
+}
+
+.recipe-card-footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    justify-items: center;
+    padding-bottom: 0.5em;
+}
+
+button.icon {
+    border: none;
+    background-color: transparent;
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    color: #666666;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+}
+
+.icon.enabled #favorite {
+    color: var(--nav-color);
+}
+
+@media only screen and (max-width: 750px) {
+    #main {
+    grid-template-columns: repeat(2, 1fr);
+    }
+    #form-container {
+            top: 70px; 
+            width: 80%;
+        }
+}
+
+@media only screen and (max-width: 550px) {
+    #main {
+    grid-template-columns: repeat(1, 1fr);
+    }
+    #form-container {
+        top: 90px; 
+        width: 80%;
+    }
+}
