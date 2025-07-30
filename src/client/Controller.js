@@ -20,7 +20,7 @@ export default class Controller {
     this.emitter.on(events.REMOVE_FROM_FAV, this.removeFromFavorite);
   }
 
-  init = () => fetchData(urls.recipes).then(data => this.printRecipeCard(data));
+  init = () => fetchData(urls.recipes).then(this.printRecipeCard);
 
   getAllRecipies = async () => {
     this.view.removeAllCards();
@@ -29,7 +29,7 @@ export default class Controller {
 
   getFavoriteRecipies = () => fetchData(urls.fav).then(this.printRecipeCard);
 
-  printRecipeCard = result => result.forEach(e => this.view.printRecipeCard(e));
+  printRecipeCard = result => result.forEach(this.view.printRecipeCard);
 
   create = async () => {
     const userRecipeData = this.view.getRecipeInfo();
